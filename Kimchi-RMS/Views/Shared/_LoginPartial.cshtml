@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using RMS.Domain.Models
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    //castinh User model to identity model
+    var user = await UserManager.GetUserAsync(User) as User;
+    var displayName = user?.Name ?? UserManager.GetUserName(User);
+}
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+     <li class="nav-item dropdown hover-zoom">
+            <a class=" nav-link btn dropdown-toggle fw-bold text-white hover:underline btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                Profile
+            </a>
+            <ul class="dropdown-content">
+        <li class="nav-item">
+                    <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="bi bi-person-fill"></i> Hi @displayName</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text border-1">Logout</button>
+            </form>
+        </li>
+        </ul>
+     </li>        
+}
+else
+{
+        <li class="nav-item dropdown hover-zoom">
+            <a class=" nav-link btn dropdown-toggle fw-bold text-white hover:underline btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                Sign Up
+            </a>
+            <ul class="dropdown-content">
+                <li class="nav-item hover-zoom">
+                    <a class="nav-link text-center text-dark btn-click" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                </li>
+                <li class="nav-item hover-zoom">
+                    <a class="nav-link text-center text-dark btn-click" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </li>
+            </ul>
+        </li>
+ 
+}
+</ul>

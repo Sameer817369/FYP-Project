@@ -1,49 +1,69 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kimchi_RMS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Kimchi_RMS.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom bg-success">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kimchi_RMS</a>
+                <a class="navbar-brand ms-3" asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/kimchi_logo.jpg"style="width:55px;border-radius:30px;"/></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="navbar-collapse d-sm-inline-flex collapse">
+                    <ul class="navbar-nav fw-bold me-3 ms-auto">
+                        <li class="nav-item hover-zoom">
+                            <a class="nav-link text-white btn-click" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item hover-zoom">
+                            <a class="nav-link text-white btn-click hover-zoom" asp-area="Customer" asp-controller="Home" asp-action="Menu">About Us</a>
+                        </li>
+                        <li class="nav-item hover-zoom">
+                            <a class="nav-link text-white btn-click" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Reservations</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                        <li class="nav-item ms-3 mt-2">
+                            <a class="btn-fourth rounded-2 border py-2 px-4 mx-1 btn-click" asp-area="Customer" asp-controller="Home" asp-action="Menu">
+                                Order Online
+                            </a>
+                        </li>
+                        <li class="nav-item ms-3 mt-2">
+                            <a class="btn-fourth rounded-2 border py-2 px-4 mx-1 btn-click" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> Cart</a>
                         </li>
                     </ul>
                 </div>
+               
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid overflow-x-hidden p-0">
         <main role="main" class="pb-3">
+            <partial name="_Notifications" />
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Kimchi_RMS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="border-top footer text-muted pt-5 bg-light">
+        <partial name="_FooterPartial" />
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/AJAX.js"></script>
+    <script src="~/js/SweetAlerts.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,55 @@
+﻿@model List<Menu>
+
+<div class="card w-100 border-0 mt-4">
+    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Menu List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body border p-4">
+        <div class="row pb-3">
+            <div class="col-12 text-end">
+                <a asp-controller="Menu" asp-action="Create" class="btn btn-secondary">
+                    <i class="bi bi-plus-circle"></i> Create New Menu
+                </a>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>@obj.Name</td>
+                        <td>@obj.Price</td>
+                        <th>@obj.Description</th>
+                        <th>@obj.Category</th>
+                        <th>@obj.Status</th>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Menu" asp-action="Update" asp-route-menuId="@obj.Id" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <a asp-controller="Menu" asp-action="Delete" asp-route-menuId="@obj.Id" class="btn btn-danger mx-2"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+    
+

@@ -1,0 +1,47 @@
+﻿<section>
+    <div style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/restaurant.jpg');height:80vh;" 
+                class="d-flex flex-column justify-content-center align-items-center text-center text-white backgroung-alignment">
+                <h1 class="fw-bold">Savor The Authentic Taste of Kimchi</h1>
+                <p >Experience the rich flavours and vibrant culture Nepali cusine. Join us for a delightful<br /> meal that  will tantalize your taste bud</p>
+                <div class="d-flex justify-content-center">
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Menu" class="btn-fourth rounded-2 border px-5 py-2 btn-click">Order</a>
+                    <a class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click">Reserve</a>
+                </div>
+    </div> 
+</section>
+
+<section>
+    <div class="d-flex flex-column justify-content-center align-items-center text-dark mt-5">
+        <h1 class="fw-bold">Welcome To Kimchi</h1>
+        <p class="text-center text-muted pt-1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium<br />totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
+        <a class="py-2 rounded-2 border btn-third border-black btn-click px-5 shadow-sm mt-2">About Us</a>
+    </div>
+</section>
+
+<section style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/menu-background.jpg'); height:fit-content;">
+    <div class="d-flex flex-column justify-content-center align-items-center text-white mt-5 backgroung-alignment">
+        <h1 class="mt-5">Our Specials</h1>
+        <p>eaque ipsa quae ab illo inventore veritatis et quasi</p>
+    </div>
+    <div class=" container d-flex justify-content-center align-items-center w-75 mt-5">
+        @*Invocking the viewcomponent method which renders the card dynamically from database*@
+        @await Component.InvokeAsync("MenuCard", new { title = "New Entries" })
+        @await Component.InvokeAsync("MenuCard", new { title = "Kimchi Specials" }) 
+    </div>
+</section>
+
+<section class="mt-5">
+    <partial name="_CardPartial" />
+</section>
+
+<section class="backgroung-alignment" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/reservation.jpg'); height:fit-content;">
+    <div class=" d-flex flex-column justify-content-center align-items-center mt-5 text-white">
+            <h1 class="fw-bold mt-5">Reserve Your Banquet Today</h1>
+            <p class="text-center mt-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium<br />totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
+        <button type="button" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click mb-5 mt-4">Reserve Now</button>
+    </div>
+</section>
+
+
+
+

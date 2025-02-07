@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Menu>
+
+<div class="row m-5">
+    <div class="col-12">
+        <h1 class="fw-bolder text-start">Menu List</h1>
+    </div>
+</div>
+<div class="row justify-content-end me-1 mt-3">
+    <div class="dropdown col-auto">
+        <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-filter"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" role="button" onclick="FilterByCategories()">All</a></li>
+            @foreach (var category in Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>())
+            {   
+                <li><a class="dropdown-item" role="button" onclick="FilterByCategories('@category')">@category</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-auto me-5">
+        <div class="input-group">
+            <div class="form-outline" data-mdb-input-init>
+                <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Search"/>
+
+            </div>
+            <button type="button" class="btn btn-secondary" data-mdb-ripple-init>
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="mt-5" id="menuItems">
+    @if (Model != null)
+    {
+        @await Html.PartialAsync("_MenuVMPartial", Model)
+    }
+    else{
+        <div class="alert alert-danger">
+            The model is null
+        </div>
+    }
+       
+    </div>
+
+
+
+

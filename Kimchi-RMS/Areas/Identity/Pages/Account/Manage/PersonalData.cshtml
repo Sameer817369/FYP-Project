@@ -1,0 +1,13 @@
+﻿@page
+@model PersonalDataModel
+ <div class="d-flex flex-column">
+     <div>
+         <p>Deleting the account will remove your account from the system</p>
+     </div>
+     <p>
+         <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
+     </p>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
