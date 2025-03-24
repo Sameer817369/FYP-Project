@@ -126,7 +126,7 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
             }
             return View(menuFromDb);
         }
-        [HttpPost]
+ 
         [HttpPost]
         public IActionResult Delete(int menuId)
         {

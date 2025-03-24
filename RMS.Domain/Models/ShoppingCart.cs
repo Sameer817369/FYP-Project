@@ -19,5 +19,6 @@ namespace RMS.Domain.Models
         [ValidateNever]
         public User User { get; set; }
 
+        public const string SessionCart = "ShoppingCart";
     }
 }

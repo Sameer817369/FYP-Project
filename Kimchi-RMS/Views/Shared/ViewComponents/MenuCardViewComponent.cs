@@ -4,7 +4,7 @@ using RMS.Application.Service.Interface;
 using RMS.Domain.Enums;
 using RMS.Domain.Models;
 
-namespace Kimchi_RMS.Areas.Customer.Views.Shared.ViewComponents
+namespace Kimchi_RMS.Views.Shared.ViewComponents
 {
     public class MenuCardViewComponent : ViewComponent
     {

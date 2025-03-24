@@ -1,0 +1,88 @@
+﻿@model OrderVM
+
+    <div class="container-fluid">
+        <div class="card w-100">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-3">
+                <h5 class="mb-0">Shopping Cart</h5>
+                <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn-third py-1 px-4 rounded-2 btn-click">Back to Order</a>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-start">
+                    <!-- Order Details Section -->
+                    <div class="col-md-7">
+                        <h5 class="text-dark">Order Details:</h5>
+                    <form method="post" asp-controller="Order" asp-action="UpdateOrderDetails">
+                            <input asp-for="Order.Id" hidden/>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input asp-for="Order.Name" type="text" class="form-control" id="name" placeholder="Enter your name"required>
+                                <span asp-validation-for="Order.Name" class="text-danger"></span>
+                            </div>
+                            <div class="mb-7">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input asp-for="Order.PhoneNumber" type="text" class="form-control" id="phone" placeholder="Enter your phone number"required>
+                                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input asp-for="Order.City" type="text" class="form-control" id="city" placeholder="City"required>
+                                    <span asp-validation-for="Order.City" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="address" class="form-label">Street Address</label>
+                                    <input asp-for="Order.Address" type="text" class="form-control" id="address" placeholder="Enter your address" required>
+                                    <span asp-validation-for="Order.Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn-six btn-click py-2 px-5 w-100 rounded-2"><span class="fw-bolder text-dark">Update Order Details</span></button>
+                            </div>
+                          </form>
+                    </div>
+                    <!-- Order Summary Section -->
+                    <div class="col-md-5">
+                        <h5 class="text-dark">Order Summary:</h5>
+                    <div class="border border-secondary-subtle py-2 pb-0 rounded-2">
+                        <h5 class="fw-bold text-center">
+                            Order Status: 
+                            <span class="@(Model.Order.Status == "Pending" ? "text-danger" : "text-success")">
+                                @Model.Order.Status
+                            </span>
+                        </h5>
+                    </div>
+
+                        <ul class="list-group mb-3">
+                            @foreach (var obj in Model.OrderDetail)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="my-0 fw-bold">@obj.Menu.Name</h6>
+                                        <p class="mb-0">Quantity: <span class="fw-bold">@obj.Quantity</span></p>
+                                        <p class="mb-0">Price: <span class="fw-bold">Rs @obj.Menu.Price.ToString("#,0.00")</span></p>
+                                    </div>
+                                    <div class="text-end">
+                                        <p class="mb-0">Sub-total:<span class="fw-bold">Rs @((obj.Menu.Price * @obj.Quantity).ToString("#,0.00"))</span></p>
+                                    </div>
+                                </li>
+                            }
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <h3><span class="fw-bold">Total</span></h3>
+                                <h3><strong>Rs @Model.Order.TotalAmount.ToString("#,0.00")</strong></h3>
+                            </li>
+                        </ul>
+                    <!-- Order Completion Form -->
+                    <form method="post" asp-controller="Order" asp-action="OrderComplete">
+                        <input type="hidden" asp-for="Order.Id" /> <!-- Ensure order ID is sent -->
+                        <button type="submit" class="btn-seven px-5 py-2 rounded-2 btn-click w-100">
+                            Complete Order
+                        </button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

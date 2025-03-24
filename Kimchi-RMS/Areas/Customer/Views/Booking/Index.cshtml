@@ -1,0 +1,70 @@
+﻿<div style="background: url('/images/restaurant.jpg') no-repeat center center fixed;
+        background-size: cover;
+        height: 100vh;"
+        class="d-flex justify-content-center align-items-center mt-0 pb-0">
+    <div class="background-filter">
+        <h2 class="text-center mb-4 fw-medium">Reserve Banquet</h2>
+        <hr />
+        <form method="post" asp-controller="Booking">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">First Name:</label>
+                    <input type="text" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name:</label>
+                    <input type="text" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contact No:</label>
+                    <input type="text" class="form-control" placeholder="Your Contact Number">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email:</label>
+                    <input type="email" class="form-control" placeholder="Your Email">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Arrival Date:</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Time:</label>
+                    <input type="time" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">No. of Plates:</label>
+                    <input type="number" class="form-control" placeholder="Number of Plates">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Food:</label>
+                    <select class="form-select">
+                        <span class="text-dark">
+                        <option disabled selected>Choose Food</option>
+                        <option>Veg</option>
+                        <option>Non-Veg</option>
+                        <option>Both</option>
+                        </span>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Drinks:</label>
+                    <select class="form-select">
+                        <span class="text-dark">
+                        <option disabled selected>Choose Drinks</option>
+                        <option>Hard-Drinks</option>
+                        <option>Soft-Drinks</option>
+                        <option>Both</option>
+                        </span>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn-six btn-click rounded-2 w-100 p-2">Make a Reservation</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+

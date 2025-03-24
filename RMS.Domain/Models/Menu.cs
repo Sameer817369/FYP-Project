@@ -28,7 +28,6 @@ namespace RMS.Domain.Models
         public string? ImgUrl { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get;set; } = DateTime.Now;
-        [NotMapped]
-        public double MenuTotal { get; set; }
+       
     }
 }

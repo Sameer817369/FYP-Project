@@ -5,7 +5,7 @@
                 <p >Experience the rich flavours and vibrant culture Nepali cusine. Join us for a delightful<br /> meal that  will tantalize your taste bud</p>
                 <div class="d-flex justify-content-center">
                     <a asp-area="Customer" asp-controller="Home" asp-action="Menu" class="btn-fourth rounded-2 border px-5 py-2 btn-click">Order</a>
-                    <a class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click">Reserve</a>
+                    <a asp-area="Customer" asp-controller="Booking" asp-action="Index" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click">Reserve</a>
                 </div>
     </div> 
 </section>
@@ -38,7 +38,7 @@
     <div class=" d-flex flex-column justify-content-center align-items-center mt-5 text-white">
             <h1 class="fw-bold mt-5">Reserve Your Banquet Today</h1>
             <p class="text-center mt-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium<br />totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-        <button type="button" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click mb-5 mt-4">Reserve Now</button>
+        <a type="button" asp-area="Customer" asp-controller="Booking" asp-action="Index" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click mb-5 mt-4">Reserve Now</a>
     </div>
 </section>
 

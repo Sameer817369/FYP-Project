@@ -707,5 +707,26 @@ bg-success {
     transform: translateY(0);
     transition: opacity 0.3s ease, visibility 0s 0s, transform 0.3s ease;
 }
+/* Transparent form with blurred background */
+.background-filter {
+    background: rgba(0, 0, 0, 0.6); /* Dark transparency */
+    backdrop-filter: blur(8px); /* Blur effect */
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    width: 50%;
+}
 
+    /* Transparent input fields */
+    .reservation-form input,
+    .reservation-form select {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+    }
+
+        .reservation-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
 

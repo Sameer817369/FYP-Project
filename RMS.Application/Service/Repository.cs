@@ -18,8 +18,15 @@ namespace RMS.Application.Service
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null)
         {
             IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter); 
+            }
+
             return query.ToList();
         }
+
         public T GetById(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;

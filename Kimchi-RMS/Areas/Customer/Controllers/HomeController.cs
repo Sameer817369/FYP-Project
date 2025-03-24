@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RMS.Application.Service.Interface;
 using RMS.Domain.Enums;
@@ -12,7 +13,6 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
     {
        
         private readonly IUnitOfWork _unitOfWork;
-
         public HomeController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -24,8 +24,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         public IActionResult Menu()
         {
             IEnumerable<Menu> menuList = _unitOfWork.Menu.GetAll();
-            return View(menuList);
-           
+            return View(menuList);  
         }
 
         [HttpPost]
@@ -41,8 +40,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 return RedirectToAction("Menu");
             }
 
-            var cartItem = _unitOfWork.ShoppingCart.GetAll()
-                           .FirstOrDefault(c => c.MenuId == menuId && c.UserId == userId);
+            var cartItem = _unitOfWork.ShoppingCart.GetById(c => c.MenuId == menuId && c.UserId == userId);
 
             if (cartItem == null)
             {
@@ -51,19 +49,20 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 {
                     MenuId = menuId,
                     UserId = userId,
-                    Count = count
+                    Count = count,   
                 });
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(ShoppingCart.SessionCart,
+                    _unitOfWork.ShoppingCart.GetAll(u => u.UserId == userId).Count());
             }
             else
             {
                 // Item exists, update count
                 cartItem.Count += count;
                 _unitOfWork.ShoppingCart.Update(cartItem);
+                _unitOfWork.Save();
             }
-
-            _unitOfWork.Save();
             TempData["success"] = "Item successfully added to cart.";
-
             return RedirectToAction("Menu");
         }
 
