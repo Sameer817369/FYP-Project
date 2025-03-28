@@ -11,6 +11,7 @@ namespace RMS.Application.Service
         public IUserRepository User { get; set; }
         public IOrderRepository Order { get; set; }
         public IOrderDetailRepository OrderDetail { get; set; }
+        public IBookingRepository Booking { get; set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -20,6 +21,7 @@ namespace RMS.Application.Service
             User = new UserRepository(_db);
             Order = new OrderRepository(_db);
             OrderDetail = new OrderDetailRepository(_db);
+            Booking = new BookingRepository(_db);
         }
 
         public void Save()

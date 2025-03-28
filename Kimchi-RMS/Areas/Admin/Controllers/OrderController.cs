@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Common;
 using RMS.Application.Service.Interface;
 using RMS.Domain.Models;
 using RMS.Domain.Models.ViewModels;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Kimchi_RMS.Areas.Admin.Controllers
 {
@@ -12,12 +15,14 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailSender _emailSender;
         [BindProperty]
         public OrderVM OrderVM { get; set; }
       
-        public OrderController(IUnitOfWork unitOfWork)
+        public OrderController(IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
+            _emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -63,20 +68,34 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public IActionResult OrderComplete()
+        public async Task<IActionResult> OrderComplete()
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             var orderFromDb = _unitOfWork.Order.GetById(u => u.Id == OrderVM.Order.Id);
+            var user = _unitOfWork.User.GetById(u => u.Id == orderFromDb.UserId);
+
             if (orderFromDb.Status == "Pending")
             {
                 orderFromDb.Status = "Completed";
                 _unitOfWork.Order.Update(orderFromDb);
                 _unitOfWork.Save();
                 TempData["Success"] = "Order Completed";
+                try
+                {
+                    await _emailSender.SendEmailAsync(user.Email, "Order Delivery",
+                         $"<p>Your Order place on {orderFromDb.OrderDate} Has been given to delivery!</p>");
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, "Failed to send email");
+                }
             }
             else
             {
-                TempData[ "error"] = "Order is completed";
+                TempData["error"] = "Order is completed";
             }
+       
             return RedirectToAction("Details", new { orderId = orderFromDb.Id });
         }
     }

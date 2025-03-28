@@ -1,4 +1,6 @@
-﻿<div style="background: url('/images/restaurant.jpg') no-repeat center center fixed;
+﻿@model Booking
+
+<div style="background: url('/images/restaurant.jpg') no-repeat center center fixed;
         background-size: cover;
         height: 100vh;"
         class="d-flex justify-content-center align-items-center mt-0 pb-0">
@@ -7,58 +9,59 @@
         <hr />
         <form method="post" asp-controller="Booking">
             <div class="row g-3">
-                <div class="col-md-6">
-                    <label class="form-label">First Name:</label>
-                    <input type="text" class="form-control" placeholder="First Name">
+                <div class="col-md-12">
+                    <label asp-for="Name" class="form-label">Full Name:</label>
+                    <input asp-for="Name" type="text" class="form-control text-dark-emphasis" placeholder="Your Full Name">
+                    <span asp-validation-for="Name" class="text-danger"/>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Last Name:</label>
-                    <input type="text" class="form-control" placeholder="Last Name">
+                    <label asp-for="PhoneNumber" class="form-label">Contact No:</label>
+                    <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="Your Contact Number">
+                    <span asp-validation-for="PhoneNumber" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Contact No:</label>
-                    <input type="text" class="form-control" placeholder="Your Contact Number">
+                    <label asp-for="Email" class="form-label">Email:</label>
+                    <input type="email" asp-for="Email" class="form-control" placeholder="Your Email">
+                    <span asp-validation-for="Email" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Email:</label>
-                    <input type="email" class="form-control" placeholder="Your Email">
+                    <label asp-for="ArrivalDate" class="form-label">Booking Date:</label>
+                    <input asp-for="ArrivalDate" type="date" class="form-control">
+                    <span asp-validation-for="ArrivalDate" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Arrival Date:</label>
-                    <input type="date" class="form-control">
+                    <label asp-for="ArrivalTime" class="form-label">Arrival Time:</label>
+                    <input asp-for="ArrivalTime" type="time" class="form-control">
+                    <span asp-validation-for="ArrivalTime" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Time:</label>
-                    <input type="time" class="form-control">
+                    <label asp-for="NumberOfPlates" class="form-label">No. of Plates:</label>
+                    <input asp-for="NumberOfPlates" type="number" class="form-control" placeholder="Number of Plates">
+                    <span asp-validation-for="NumberOfPlates" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">No. of Plates:</label>
-                    <input type="number" class="form-control" placeholder="Number of Plates">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Food:</label>
-                    <select class="form-select">
-                        <span class="text-dark">
+                    <label asp-for="Food" class="form-label">Food:</label>
+                    <select asp-for="Food" asp-items="Html.GetEnumSelectList<FoodType>()" class="form-select">
                         <option disabled selected>Choose Food</option>
-                        <option>Veg</option>
-                        <option>Non-Veg</option>
-                        <option>Both</option>
-                        </span>
                     </select>
+                    <span asp-validation-for="Food" class="text-danger" />
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Drinks:</label>
-                    <select class="form-select">
-                        <span class="text-dark">
-                        <option disabled selected>Choose Drinks</option>
-                        <option>Hard-Drinks</option>
-                        <option>Soft-Drinks</option>
-                        <option>Both</option>
-                        </span>
+                    <label asp-for="Drinks" class="form-label">Drinks:</label>
+                    <select asp-for="Drinks" asp-items="Html.GetEnumSelectList<DrinkType>()" class="form-select">
+                        <option disabled selected>Choose Drinks</option>   
                     </select>
+                    <span asp-validation-for="Drinks" class="text-danger" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="EventType" class="form-label">Event Type:</label>
+                    <select asp-for="EventType" asp-items="Html.GetEnumSelectList<EventType>()" class="form-select">
+                        <option disabled selected>Choose Event Type</option>
+                    </select>
+                    <span asp-validation-for="EventType" class="text-danger" />
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn-six btn-click rounded-2 w-100 p-2">Make a Reservation</button>
+                    <button type="submit" class="btn-six btn-click rounded-2 w-100 p-2 mt-1">Make a Reservation</button>
                 </div>
             </div>
         </form>

@@ -7,6 +7,7 @@
         IUserRepository User { get; }
         IOrderRepository Order { get; }
         IOrderDetailRepository OrderDetail { get; }
+        IBookingRepository Booking { get; }
         void Save();
     }
 }

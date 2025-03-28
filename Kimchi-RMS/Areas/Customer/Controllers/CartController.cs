@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using RMS.Application.Service.Interface;
 using RMS.Domain.Models;
 using RMS.Domain.Models.ViewModels;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Kimchi_RMS.Areas.Customer.Controllers
 {
@@ -12,10 +14,12 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailSender _emailSender;
         public ShoppingCartVM ShoppingCartVM { get; set; }
-        public CartController(IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
+            _emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -111,10 +115,13 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             }
             return RedirectToAction("OrderConformation", new { id = ShoppingCartVM.Order.Id });
         }
-        public IActionResult OrderConformation(int id)
+        public async Task<IActionResult> OrderConformation(int id)
         {
+           
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Order order = _unitOfWork.Order.GetById(u => u.UserId == userId);
+            User user = _unitOfWork.User.GetById(u => u.Id == order.UserId);
             // Fetch the cart based on UserId
             var cartToRemove = _unitOfWork.ShoppingCart.GetById(u => u.UserId == userId);
 
@@ -125,8 +132,26 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
             HttpContext.Session.Clear();
+            if(user == null)
+            {
+                return NotFound("User not found");
+            }
+            if (order == null)
+            {
+                return NotFound("Order not found");
+            }
+            try
+            {
+               await _emailSender.SendEmailAsync(order.User.Email, "Order Conformation",
+                    $"<pYour Order Has been Placed!</br> Thank You For Ordering From Us</p>");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Failed to send emial");
+            }
             return View(id);
         }
+
 
         public IActionResult Add(int cartId)
         {
@@ -157,7 +182,6 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                     _unitOfWork.ShoppingCart.Delete(cardFromDb);
                     HttpContext.Session.SetInt32(ShoppingCart.SessionCart,
                          _unitOfWork.ShoppingCart.GetAll(u => u.UserId == cardFromDb.UserId).Count() - 1);
-
                 }
                 else
                 {
