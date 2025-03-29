@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RMS.Application.Service.Interface;
 using RMS.Domain.Models;
 using RMS.Domain.Models.ViewModels;
@@ -73,6 +74,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             }
             return View(ShoppingCartVM);
         }
+
         [HttpPost]
         [ActionName("OrderSummary")]
         public IActionResult OrderSummaryPost(ShoppingCartVM shoppingCartVM)
@@ -80,48 +82,41 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             double orderTotal = 0;
+
             ShoppingCartVM = new()
             {
                 ShoppingCardList = _unitOfWork.ShoppingCart.GetAll(u => u.UserId == userId),
                 Order = shoppingCartVM.Order
             };
+
             ShoppingCartVM.Order.OrderDate = System.DateTime.Now;
             ShoppingCartVM.Order.UserId = userId;
             ShoppingCartVM.Order.Status = "Pending";
 
             foreach (var cart in ShoppingCartVM.ShoppingCardList)
             {
-                var menuList = _unitOfWork.Menu.GetAll(u => u.Id == cart.MenuId);
-                if (menuList != null)
+                var menuItem = _unitOfWork.Menu.GetAll(u => u.Id == cart.MenuId).FirstOrDefault();
+                if (menuItem != null)
                 {
                     double individualTotal = cart.Menu.Price * cart.Count;
                     orderTotal += individualTotal;
                 }
-                ShoppingCartVM.Order.TotalAmount = orderTotal;
             }
-            _unitOfWork.Order.Add(ShoppingCartVM.Order);
-            _unitOfWork.Save();
-            foreach(var cart in ShoppingCartVM.ShoppingCardList)
-            {
-                OrderDetail orderDetail = new()
-                {
-                    MenuId = cart.MenuId,
-                    OrderId = ShoppingCartVM.Order.Id,
-                    Price = cart.Menu.Price,
-                    Quantity = cart.Count    
-                };
-                _unitOfWork.OrderDetail.Add(orderDetail);
-                _unitOfWork.Save();
-            }
-            return RedirectToAction("OrderConformation", new { id = ShoppingCartVM.Order.Id });
+            ShoppingCartVM.Order.TotalAmount = orderTotal;
+            // Serializing the Order object to a string
+            string serializedOrder = JsonConvert.SerializeObject(ShoppingCartVM.Order);
+            // Store order temporarily in session
+            HttpContext.Session.SetString("PendingOrder", serializedOrder);
+            // Redirect to eSewa Payment
+            return RedirectToAction("EsewaPayment", "Payment");
         }
+
         public async Task<IActionResult> OrderConformation(int id)
         {
            
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Order order = _unitOfWork.Order.GetById(u => u.UserId == userId);
-            User user = _unitOfWork.User.GetById(u => u.Id == order.UserId);
+            var user = _unitOfWork.User.GetById(u => u.Id == userId);
             // Fetch the cart based on UserId
             var cartToRemove = _unitOfWork.ShoppingCart.GetById(u => u.UserId == userId);
 
@@ -136,13 +131,9 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             {
                 return NotFound("User not found");
             }
-            if (order == null)
-            {
-                return NotFound("Order not found");
-            }
             try
             {
-               await _emailSender.SendEmailAsync(order.User.Email, "Order Conformation",
+               await _emailSender.SendEmailAsync(user.Email, "Order Conformation",
                     $"<pYour Order Has been Placed!</br> Thank You For Ordering From Us</p>");
             }
             catch(Exception ex)

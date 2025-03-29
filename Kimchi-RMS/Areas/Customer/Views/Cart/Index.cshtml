@@ -51,9 +51,11 @@
                 <div class="col-md-4">
                     <div class="border p-3 rounded bg-light text-center">
                         <h4 class="fw-bold mb-3">Total: Rs @Model.Order.TotalAmount.ToString("#,0.00")</h4>
-                        @if(Model == null)
+                        @if(Model.ShoppingCardList == null || !Model.ShoppingCardList.Any())
                         {
-                            TempData["error"] = "No items in the cart to continue";
+                            <button class="btn-disabled px-5 py-2 rounded-2 btn-click" disabled>
+                                <i class="bi bi-cart-check"></i> Proceed To Checkout
+                            </button>
                         }
                         else
                         {

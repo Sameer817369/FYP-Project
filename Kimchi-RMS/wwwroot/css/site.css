@@ -730,3 +730,12 @@ bg-success {
             color: rgba(255, 255, 255, 0.7);
         }
 
+.btn-disabled {
+    background-color: #ccc; 
+    color: #666;
+    border: 1px solid #aaa; 
+    cursor: not-allowed; 
+    opacity: 0.6; 
+
+}
+
