@@ -1,14 +1,4 @@
 ﻿
-// function for success and error alerts
-function showAlert(type, message, buttonText = 'OK') {
-    Swal.fire({
-        title: type === 'success' ? 'Success!' : 'Error!',
-        text: message,
-        icon: type,
-        confirmButtonText: buttonText
-    });
-}
-
 // Function for showing a confirmation alert with dynamic title and text
 function showConfirmationAlert(title, text, confirmCallback, confirmText = 'Yes', cancelText = 'Cancel') {
     Swal.fire({
@@ -39,6 +29,12 @@ function confirmRemoveCustomer(event, url) {
         window.location.href = url;
     });
 }
+function confirmLogout(event, url) {
+    event.preventDefault();
+    showConfirmationAlert('Are you sure?', 'Do you want to log out!', function (){
+        window.location.herf = url;
+    });
+}
 function confirmAction(event, formId, actionType, confirmColor, cancelColor) {
     event.preventDefault(); // Stop form from submitting immediately
 
@@ -52,7 +48,10 @@ function confirmAction(event, formId, actionType, confirmColor, cancelColor) {
         confirmButtonText: `Yes, ${actionType.toLowerCase()} it!`
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById(formId).submit(); // Submit the specified form
+            const form = document.getElementById(formId).submit();
+            if (form) {
+                form.submit();//Submit the dynamically specified form
+            }
         }
     });
 }

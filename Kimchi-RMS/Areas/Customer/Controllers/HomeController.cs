@@ -19,10 +19,18 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
+            if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             return View();
         }
         public IActionResult Menu()
         {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             IEnumerable<Menu> menuList = _unitOfWork.Menu.GetAll();
             return View(menuList);  
         }
@@ -65,11 +73,28 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             TempData["success"] = "Item successfully added to cart.";
             return RedirectToAction("Menu");
         }
-
-
-
+        public IActionResult About()
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
+            return View();
+        }
         public IActionResult Privacy()
         {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             return View();
         }
         public IActionResult Error()
@@ -78,12 +103,13 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         }
         public IActionResult FilterByCategories(MenuCategory category)
         { 
+
             var filter=_unitOfWork.Menu.GetAll().Where(t => t.Category == category).ToList();
             return PartialView("_MenuVMPartial",filter);
         }
         public IActionResult SelectAll()
         {
-            var filter = _unitOfWork.Menu.GetAll().ToList();
+            var filter = _unitOfWork.Menu.GetAll();
             return PartialView("_MenuVMPartial",filter);
         }
 

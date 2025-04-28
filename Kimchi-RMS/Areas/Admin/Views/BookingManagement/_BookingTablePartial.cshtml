@@ -1,0 +1,87 @@
+﻿@model List<Booking>
+
+<!-- Table-->
+<div class="table-responsive">
+    <table class="table table-hover align-middle mb-0" id="bookingTable">
+        <thead class="bg-light text-dark">
+            <tr>
+                <th class="px-4 py-3">Customer</th>
+                <th class="py-3">Phone Number</th>
+                <th class="py-3">Booked Date</th>
+                <th class="py-3">Status</th>
+                <th class="py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <!-- User info-->
+                    <td class="px-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px; font-weight: 600;">
+                                @obj.Name.Substring(0, 1).ToUpper()
+                            </div>
+                            <div>
+                                <h6 class="mb-0">@obj.Name</h6>
+                                <small class="text-muted">@obj.Email</small>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- Contact info -->
+                    <td>
+                        <span class="text-dark">@obj.PhoneNumber</span>
+                    </td>
+                    <!-- Date -->
+                    <td>
+                        <div>
+                            <div class="d-flex align-items-center mb-1">
+                                <i class="bi bi-calendar text-muted me-2"></i>
+                                <span>@obj.ArrivalDate.ToString("MMM d, yyyy")</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-clock text-muted me-2"></i>
+                                <span>@obj.ArrivalTime.ToString()</span>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Status-->
+                    <td>
+                        <span class="fw-bolder @(obj.Status == BookingStatus.Approved ? "badge bg-success" :"badge bg-danger")">@obj.Status</span>
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li>
+                                    <a asp-controller="BookingManagement" asp-action="BookingComplete" asp-route-bookingId="@obj.Id" class="dropdown-item">
+                                        <i class="bi bi-info-circle me-2 text-primary"></i>Accept
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item text-danger" type="button" onclick="confirmAction(event, 'deleteForm-@obj.Id', 'Delete', '#dc3545', '#6c757d')">
+                                        <i class="bi bi-trash me-2"></i>Delete
+                                    </button>
+                                    <form method="post" asp-controller="Menu" asp-action="Delete" id="deleteForm-@obj.Id" class="d-none">
+                                        <input type="hidden" name="menuId" value="@obj.Id" />
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="alert alert-warning d-flex align-items-center d-none" role="alert" id="bookingTable-warning">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        No result found of that name
+    </div>
+</div>
+

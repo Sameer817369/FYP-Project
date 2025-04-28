@@ -1,0 +1,26 @@
+﻿
+<body style="background-color: #f8f9fa; padding: 30px;">
+    <div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px; margin: auto;">
+        <div class="text-center bg-success text-white py-3 rounded-top">
+            <h2>Order Confirmation</h2>
+        </div>
+
+        <div class="p-4">
+            <p>Hello <strong>{{CustomerName}}</strong>,</p>
+            <p>Your order has been successfully placed!</p>
+
+            <ul class="list-group mb-3">
+                <li class="list-group-item"><strong>Order ID:</strong> {{OrderId}}</li>
+                <li class="list-group-item"><strong>Total Amount:</strong> ${{TotalAmount}}</li>
+                <li class="list-group-item"><strong>Order Date:</strong> {{OrderDate}}</li>
+            </ul>
+
+            <p>Thank you for ordering from us. We appreciate your business and hope you enjoy your purchase!</p>
+        </div>
+
+        <div class="text-center text-muted small pt-3 border-top">
+            &copy; 2025 YourCompany. All rights reserved.
+        </div>
+    </div>
+</body>
+

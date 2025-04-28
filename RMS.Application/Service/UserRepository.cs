@@ -16,5 +16,10 @@ namespace RMS.Application.Service
         {
             _db = db;
         }
+
+        public void Update(User user)
+        {
+            _db.Users.Update(user);
+        }
     }
 }

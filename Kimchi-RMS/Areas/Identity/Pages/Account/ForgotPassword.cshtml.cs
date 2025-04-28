@@ -13,18 +13,21 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using RMS.Application.Service.Interface;
+using RMS.Domain.Models;
 
 namespace Kimchi_RMS.Areas.Identity.Pages.Account
 {
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSender _emailSender;
-
-        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -53,16 +56,17 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                var user = _unitOfWork.User.GetById(u=>u.Email == Input.Email);
+                if (user == null)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    TempData["error"] = "Email not registered";
+                    return RedirectToPage("./ForgotPassword");
                 }
+                var userByEmail = await _userManager.FindByEmailAsync(user.Email);
 
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(userByEmail);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
                     "/Account/ResetPassword",
@@ -71,7 +75,7 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account
                     protocol: Request.Scheme);
 
                 await _emailSender.SendEmailAsync(
-                    Input.Email,
+                    user.Email,
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

@@ -12,6 +12,10 @@ namespace RMS.Application.Service
         public IOrderRepository Order { get; set; }
         public IOrderDetailRepository OrderDetail { get; set; }
         public IBookingRepository Booking { get; set; }
+        public IFeedBackRepository FeedBack { get; set; }
+        public IEmoloyeeRepository Employee { get; set; }
+        public ITransactionRepository Transaction { get; set; }
+        public IInventoryRepository Inventory { get; set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -22,8 +26,11 @@ namespace RMS.Application.Service
             Order = new OrderRepository(_db);
             OrderDetail = new OrderDetailRepository(_db);
             Booking = new BookingRepository(_db);
+            FeedBack = new FeedbackRepository(_db);
+            Employee = new EmployeeRepository(_db);
+            Transaction = new TransactionRepository(_db);
+            Inventory = new InventoryRepository(_db);
         }
-
         public void Save()
         {
             _db.SaveChanges();

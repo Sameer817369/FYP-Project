@@ -22,6 +22,10 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Error", "Home", new { area = "customer" });
+            }
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             Booking booking = new();
@@ -43,7 +47,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var currentUser = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = _unitOfWork.User.GetById(u => u.Id == currentUser);
+            var user = _unitOfWork.User.GetById(u => u.Id == currentUser.ToString());
             if (string.IsNullOrEmpty(currentUser))
             {
                 return NotFound("User not found");
@@ -64,7 +68,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             Booking bookingDetail = new()
             {
                 UserId = currentUser,
-                Status = "Pending",
+                Status = BookingStatus.Pending,
                 Name = bookingInput.Name,
                 Email = bookingInput.Email,
                 PhoneNumber = bookingInput.PhoneNumber,
@@ -91,6 +95,10 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         }
         public IActionResult BookingConfirmation(int id)
         {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             return View(id);
         }
     }

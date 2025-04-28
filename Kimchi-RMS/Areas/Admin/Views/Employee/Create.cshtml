@@ -1,0 +1,160 @@
+﻿@model Employee
+
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow">
+        <!-- Header-->
+        <div class="card-header bg-primary bg-gradient p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">
+                    <i class="bi bi-person-plus me-2"></i>Add New Employee
+                </h2>
+                <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i>Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body p-4">
+            <form method="post" class="row">
+                <div class="col-12">
+                    <!-- Personal details card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-person-vcard me-2"></i>Personal Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Name input -->
+                                <div class="col-md-12">
+                                    <label asp-for="Name" class="form-label">Full Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-person"></i>
+                                        </span>
+                                        <input asp-for="Name" class="form-control" placeholder="Enter employee's full name" />
+                                    </div>
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Email input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Email" class="form-label">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-envelope"></i>
+                                        </span>
+                                        <input asp-for="Email" type="email" class="form-control" placeholder="email@example.com" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Phone input -->
+                                <div class="col-md-6">
+                                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+                                        <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="Enter phone number" />
+                                    </div>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-geo-alt me-2"></i>Address Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- City input -->
+                                <div class="col-md-6">
+                                    <label asp-for="City" class="form-label">City</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-building"></i>
+                                        </span>
+                                        <input asp-for="City" class="form-control" placeholder="Enter city name" />
+                                    </div>
+                                    <span asp-validation-for="City" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Street input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Street" class="form-label">Street Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-signpost"></i>
+                                        </span>
+                                        <input asp-for="Street" class="form-control" placeholder="Enter street address" />
+                                    </div>
+                                    <span asp-validation-for="Street" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employment details card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-briefcase me-2"></i>Employment Details
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Role dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Role" class="form-label">Job Role</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-person-badge"></i>
+                                        </span>
+                                        <select asp-for="Role" class="form-select" asp-items="Html.GetEnumSelectList<Roles>()">
+                                            <option disabled selected>Select Role</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Role" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Salary input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Salary" class="form-label">Monthly Salary</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-currency-rupee"></i>
+                                        </span>
+                                        <input asp-for="Salary" type="number" class="form-control" placeholder="Enter monthly salary" />
+                                    </div>
+                                    <span asp-validation-for="Salary" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form actions -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Add Employee
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

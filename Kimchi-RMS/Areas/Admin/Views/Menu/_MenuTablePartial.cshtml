@@ -1,0 +1,83 @@
+﻿@model List<Menu>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="menuTable">
+            <thead class="bg-light text-dark">
+                <tr>
+                    <th class="px-4 py-3">Item</th>
+                    <th class="py-3">Details</th>
+                    <th class="py-3">Category</th>
+                    <th class="py-3">Status</th>
+                    <th class="py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <!-- Menu item -->
+                        <td class="px-4">
+                            <div class="d-flex align-items-center">
+                                <div class="menu-item-img bg-light rounded me-3 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cup-hot text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">@obj.Name</h6>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">
+                                        <i class="bi bi-tag-fill me-1"></i><i class="bi bi-currency-rupee"></i>@obj.Price.ToString("0.00")
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Description -->
+                        <td>
+                            <p class="text-muted mb-0 description-text">@obj.Description</p>
+                        </td>
+
+                        <!-- Category -->
+                        <td>
+                            <span class="badge bg-light text-dark border">@obj.Category</span>
+                        </td>
+
+                        <!-- Status-->
+                        <td>
+                            <span class="@(obj.Status == MenuStatus.Available ? "badge bg-success" :"badge bg-danger")">@obj.Status</span>
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Menu" asp-action="Update" asp-route-menuId="@obj.Id">
+                                            <i class="bi bi-pencil-square me-2 text-success"></i>Edit
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button class="dropdown-item text-danger" type="button" onclick="confirmAction(event, 'deleteForm-@obj.Id', 'Delete', '#dc3545', '#6c757d')">
+                                            <i class="bi bi-trash me-2"></i>Delete
+                                        </button>
+                                        <form method="post" asp-controller="Menu" asp-action="Delete" id="deleteForm-@obj.Id" class="d-none">
+                                            <input type="hidden" name="menuId" value="@obj.Id" />
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="alert alert-warning d-flex align-items-center d-none" role="alert" id="menuTable-warning">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+            No result found of that name
+        </div>
+
+    </div>
+
+

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using RMS.Application.Service.Interface;
+using RMS.Domain.Enums;
 using RMS.Domain.Models;
 
 namespace Kimchi_RMS.Areas.Admin.Controllers
@@ -20,21 +21,21 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Booking> bookings = _unitOfWork.Booking.GetAll().ToList();
+            var bookings = _unitOfWork.Booking.GetAll().OrderByDescending(u=>u.BookingDate).ToList();
             return View(bookings);
         }
 
         public IActionResult BookingComplete(int bookingId)
         {
             var bookingFromDb = _unitOfWork.Booking.GetById(u => u.Id == bookingId);
-            var user = _unitOfWork.User.GetById(u =>u.Id == bookingFromDb.UserId);
-            if(bookingFromDb == null)
+            var user = _unitOfWork.User.GetById(u => u.Id == bookingFromDb.UserId);
+            if (bookingFromDb == null)
             {
                 return NotFound("User not found");
             }
-            if (bookingFromDb.Status == "Pending")
+            if (bookingFromDb.Status == BookingStatus.Pending)
             {
-                bookingFromDb.Status = "Approved";
+                bookingFromDb.Status = BookingStatus.Approved;
                 _unitOfWork.Booking.update(bookingFromDb);
                 _unitOfWork.Save();
                 TempData["Success"] = "Booking Completed";
@@ -54,6 +55,18 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
             }
          
             return RedirectToAction("Index", new { BookingId = bookingFromDb.Id });
+        }
+        public IActionResult FilterByStatus(BookingStatus? status)
+        {
+            var filteredBookings = status.HasValue 
+                ? _unitOfWork.Booking.GetAll(u=>u.Status == status.Value)
+                : _unitOfWork.Booking.GetAll();
+
+            if (!filteredBookings.Any())
+            {
+                return PartialView("~/Areas/Admin/Views/_NotFoundPartial.cshtml");
+            }
+            return PartialView("_BookingTablePartial", filteredBookings);
         }
     }
 }

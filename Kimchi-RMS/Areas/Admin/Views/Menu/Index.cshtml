@@ -1,55 +1,134 @@
 ﻿@model List<Menu>
 
-<div class="card w-100 border-0 mt-4">
-    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Menu List</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body border p-4">
-        <div class="row pb-3">
-            <div class="col-12 text-end">
-                <a asp-controller="Menu" asp-action="Create" class="btn btn-secondary">
-                    <i class="bi bi-plus-circle"></i> Create New Menu
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow">
+        <!-- Header-->
+        <div class="card-header bg-primary bg-gradient p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">
+                    <i class="bi bi-menu-button-wide me-2"></i>Menu Directory
+                </h2>
+                <a asp-controller="Menu" asp-action="Create" class="btn btn-light">
+                    <i class="bi bi-plus-circle me-1"></i>Add Menu Item
                 </a>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model)
-                {
-                    <tr>
-                        <td>@obj.Name</td>
-                        <td>@obj.Price</td>
-                        <th>@obj.Description</th>
-                        <th>@obj.Category</th>
-                        <th>@obj.Status</th>
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Menu" asp-action="Update" asp-route-menuId="@obj.Id" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
-                                <a asp-controller="Menu" asp-action="Delete" asp-route-menuId="@obj.Id" class="btn btn-danger mx-2"><i class="bi bi-trash"></i> Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
 
+        <!-- Card body -->
+        <div class="card-body p-0">
+            <!-- Search and filter section -->
+            <div class="bg-light p-3 border-bottom">
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" id="searchInput" data-table-id="menuTable"  class="form-control" placeholder="Search menu items...">
+                        </div>
+                    </div>
+                    <div class="dropdown col-md-2">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-filter me-2"></i>Filter by Status
+                        </button>
+                        <ul class="dropdown-menu shadow-sm">
+                            <li><a class="dropdown-item" role="button" onclick="FilterMenuByStatus()">All Status</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            @foreach (var status in Enum.GetValues(typeof(MenuStatus)).Cast<MenuStatus>())
+                            {
+                                <li><a class="dropdown-item" role="button" onclick="FilterMenuByStatus('@status')">@status</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="dropdown col-md-2">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-filter me-2"></i>Filter by Category
+                        </button>
+                        <ul class="dropdown-menu shadow-sm">
+                            <li><a class="dropdown-item" role="button" onclick="FilterMenuByCategories()">All Categories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            @foreach (var category in Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>())
+                            {
+                                <li><a class="dropdown-item" role="button" onclick="FilterMenuByCategories('@category')">@category</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Table Container -->
+            <div class="row" id="menuTableItems">
+                @if (Model != null)
+                {
+                    @await Html.PartialAsync("_MenuTablePartial", Model)
+                }
+                else
+                {
+                    <div class="col-12">
+                        <div class="alert alert-warning d-flex align-items-center p-4" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+                            <div>The model is null. No menu items to display.</div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+      @*       <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center p-3 border-top">
+                <div class="text-muted">
+                    Showing <span class="fw-medium">@Model.Count</span> menu items
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div> *@
+        </div>
     </div>
 </div>
+<script src="~/js/Search.js"></script>
+@* <script>
+        function FilterMenuByCategories(category = '') {
+        var url = category ? `/Admin/Menu/FilterByCategories` : `/Admin/Menu/SelectAll`;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: { category: category },
+            beforeSend: function () {
+                $("#menuTableItems").html('<div class="text-center"><i class="spinner-border text-primary"></i> Loading...</div>');
+            },
+            success: function (data) {
+                $("#menuTableItems").html(data);
+            },
+            error: function () {
+                alert('Error loading menu items.');
+            }
+        });
+    }
+
+</script>
+ *@
 
 
-    
+
+
+
+
+
+
+
+
 

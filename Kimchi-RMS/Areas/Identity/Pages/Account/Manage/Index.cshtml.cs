@@ -4,11 +4,15 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RMS.Application.Service.Interface;
+using RMS.Domain.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kimchi_RMS.Areas.Identity.Pages.Account.Manage
 {
@@ -16,13 +20,16 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -55,23 +62,29 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Phone]
             [Display(Name = "Phone number")]
+            [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be 10 digits.")]
+            [Required]
             public string PhoneNumber { get; set; }
+            [Required]
             public string Name { get; set; }
-            public string Address { get; set; }
+            [Required]
+            public string Street { get; set; }
+            [Required]
+            public string City { get; set; }
 
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            Username = userName;
 
+            var userInfo = _unitOfWork.User.GetById(u => u.Id == user.Id);
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = userInfo.PhoneNumber,
+                Name = userInfo.Name,
+                Street = userInfo.Address,
+                City = userInfo.City 
             };
         }
 
@@ -100,22 +113,26 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            // Update Additional Properties (Name, Address, City)
+            var userInfo = _unitOfWork.User.GetById(u => u.Id == user.Id);
+            if (userInfo.PhoneNumber != Input.PhoneNumber ||
+                userInfo.Name != Input.Name ||
+                userInfo.Address != Input.Street ||
+                userInfo.City != Input.City)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                userInfo.PhoneNumber = Input.PhoneNumber;
+                userInfo.Name = Input.Name;
+                userInfo.Address = Input.Street;
+                userInfo.City = Input.City;
+                _unitOfWork.User.Update(userInfo);
+                _unitOfWork.Save();
+                await _signInManager.RefreshSignInAsync(user);
+                StatusMessage = "Your profile has been updated";
             }
-          
-
-       
-
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            else
+            {
+                StatusMessage = "Error: Nothing changed to update";
+            }
             return RedirectToPage();
         }
     }

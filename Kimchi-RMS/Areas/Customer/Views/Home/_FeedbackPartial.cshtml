@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Feedback>
+
+<section class="team-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <span class="badge bg-danger px-3 py-2 mb-2">What Our Customer Say</span>
+                <h1 class="display-5 fw-bold">Our Culinary Experts</h1>
+                <div class="mx-auto" style="width: 50px; height: 3px; background-color: #dc3545; margin-top: 15px;"></div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            @foreach (var feedback in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 team-card">
+                        <div class="position-relative">
+                            <img src="@feedback.User.Name" class="card-img-top rounded-top" alt="@feedback.User.Name">
+                            <div class="position-absolute bottom-0 start-0 w-100 p-3 text-white" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                                <h5 class="fw-bold mb-1">@feedback.UserId</h5>
+                                <p class="mb-0">@feedback.UserId</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@feedback.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

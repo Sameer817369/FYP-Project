@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RMS.Application.Service.Interface;
+using RMS.Domain.Enums;
 using RMS.Domain.Models;
 using RMS.Domain.Models.ViewModels;
 using System.Security.Claims;
@@ -24,6 +25,10 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             double orderTotal = 0;
@@ -45,7 +50,11 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             return View(ShoppingCartVM);
         }
         public IActionResult OrderSummary()
-        {   
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             double orderTotal = 0;
@@ -91,7 +100,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
 
             ShoppingCartVM.Order.OrderDate = System.DateTime.Now;
             ShoppingCartVM.Order.UserId = userId;
-            ShoppingCartVM.Order.Status = "Pending";
+            ShoppingCartVM.Order.Status = Status.Pending;
 
             foreach (var cart in ShoppingCartVM.ShoppingCardList)
             {
@@ -113,10 +122,14 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
 
         public async Task<IActionResult> OrderConformation(int id)
         {
-           
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _unitOfWork.User.GetById(u => u.Id == userId);
+            var order = _unitOfWork.Order.GetById(u => u.UserId == user.Id);
             // Fetch the cart based on UserId
             var cartToRemove = _unitOfWork.ShoppingCart.GetById(u => u.UserId == userId);
 
@@ -133,8 +146,19 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
             }
             try
             {
-               await _emailSender.SendEmailAsync(user.Email, "Order Conformation",
-                    $"<pYour Order Has been Placed!</br> Thank You For Ordering From Us</p>");
+                await _emailSender.SendEmailAsync(user.Email, "Order Confirmation",
+
+                      $"<h2>Order Confirmation</h2>" +
+                      $"<p>Hi <strong>{order.Name}</strong>,</p>" +
+                      $"<p>Your order has been successfully placed!</p>" +
+                      $"<p>Thank you for ordering from us.</p>" +
+                      $"<hr>" +
+                      $"<h4>Receipt</h4>" +
+                      $"<p><strong>Id:</strong> {order.Id}</p>" +
+                      $"<p><strong>Items:</strong> {order.Name}</p>" +
+                      $"<p><strong>Order Date:</strong>{order.OrderDate}</p>" +
+                      $"<p><strong>Total:</strong> <span class='text-success fw-bold'>{order.TotalAmount}</span></p>" +
+                      $"<p>We hope to serve you again soon!</p>");
             }
             catch(Exception ex)
             {

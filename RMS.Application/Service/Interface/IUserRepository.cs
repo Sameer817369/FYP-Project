@@ -4,6 +4,6 @@ namespace RMS.Application.Service.Interface
 {
     public interface IUserRepository : IRepository<User>
     {
-        
+        void Update(User user);
     }
 }

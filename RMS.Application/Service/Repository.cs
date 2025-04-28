@@ -36,7 +36,7 @@ namespace RMS.Application.Service
         public void Add(T entity)
         {
             dbSet.Add(entity);
-        }
+        } 
         public void Delete(T entity)
         {
             dbSet.Remove(entity);

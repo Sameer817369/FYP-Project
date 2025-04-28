@@ -2,13 +2,20 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Delete Account</a></li>
+<ul class="nav flex-column bg-light p-3 shadow-sm rounded">
+    <li class="nav-item mb-2">
+        <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext) when-active d-flex align-items-center" id="profile" asp-page="./Index">
+            <i class="bi bi-person-circle text-success me-2"></i><span class="text-dark">Profile</span>
+        </a>
+    </li>
+    <li class="nav-item mb-2">
+        <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext) d-flex align-items-center" id="change-password" asp-page="./ChangePassword">
+            <i class="bi bi-key text-success me-2"></i><span class="text-dark">Password</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext) d-flex align-items-center text-danger" id="personal-data" asp-page="./PersonalData">
+            <i class="bi bi-trash me-2"></i>Delete Account
+        </a>
+    </li>
 </ul>

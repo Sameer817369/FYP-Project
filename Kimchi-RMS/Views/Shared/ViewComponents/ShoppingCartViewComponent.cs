@@ -16,7 +16,7 @@ namespace Kimchi_RMS.Views.Shared.ViewComponents
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if(userId != null)
+            if (userId != null)
             {
                 if (HttpContext.Session.GetInt32(ShoppingCart.SessionCart) == null)
                 {

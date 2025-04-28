@@ -9,37 +9,37 @@
     var user = await UserManager.GetUserAsync(User) as User;
     var displayName = user?.Name ?? UserManager.GetUserName(User);
 }
-<ul class="navbar-nav">
+<ul class="navbar-nav rounded-pill px-3"style="cursor:pointer;padding-top:1.5px;padding-bottom:1.5px; background-color:darkgreen;">
 @if (SignInManager.IsSignedIn(User))
 {
-     <li class="nav-item dropdown hover-zoom z-3">
-            <a class=" nav-link btn dropdown-toggle fw-bold text-white hover:underline btn-click" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile
+     <li class="nav-item  dropdown hover-zoom z-3">
+            <a class="nav-link dropdown-toggle fw-bolder text-white btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle text-success"></i> Profile
             </a>
-            <ul class="dropdown-content">
-        <li class="nav-item">
-                    <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="bi bi-person-fill"></i> Hi @displayName</a>
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text border-1">Logout</button>
-            </form>
-        </li>
+         <ul class="dropdown-menu">
+            <li class="nav-item hover-zoom">
+                    <a id="manage" class="nav-link text-dark btn-click" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="bi bi-person-check text-success"></i> Hi @displayName</a>
+            </li>
+            <li class="nav-item hover-zoom">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logout" type="submit" class="nav-link btn-link text-dark btn-click"><i class="bi bi-box-arrow-left text-success"></i> Logout</button>
+                </form>
+            </li>
         </ul>
      </li>        
 }
 else
 {
-        <li class="nav-item dropdown hover-zoom">
-            <a class=" nav-link btn dropdown-toggle fw-bold text-white hover:underline btn-click" data-bs-toggle="dropdown" aria-expanded="false">
-                Sign Up
+        <li class="nav-item dropdown hover-zoom  z-3">
+            <a class=" nav-link dropdown-toggle fw-bolder text-white btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle text-success"></i> Sign Up
             </a>
-            <ul class="dropdown-content">
+            <ul class="dropdown-menu z-3">
                 <li class="nav-item hover-zoom">
-                    <a class="nav-link text-center text-dark btn-click" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                    <a class="nav-link text-dark btn-click" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-person-add text-success"></i> Register</a>
                 </li>
                 <li class="nav-item hover-zoom">
-                    <a class="nav-link text-center text-dark btn-click" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    <a class="nav-link text-dark btn-click" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right text-success"></i> Login</a>
                 </li>
             </ul>
         </li>

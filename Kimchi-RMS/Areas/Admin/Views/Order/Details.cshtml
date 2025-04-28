@@ -1,88 +1,133 @@
 ﻿@model OrderVM
 
-    <div class="container-fluid">
-        <div class="card w-100">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-3">
-                <h5 class="mb-0">Shopping Cart</h5>
-                <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn-third py-1 px-4 rounded-2 btn-click">Back to Order</a>
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow">
+        <!-- Header -->
+        <div class="card-header bg-primary bg-gradient p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">
+                    <i class="bi bi-info-circle-fill me-2"></i>Order Details
+                </h2>
+                <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-light">
+                    <i class="bi bi-arrow-left me-1"></i>Back to Orders
+                </a>
             </div>
-            <div class="card-body">
-                <div class="row align-items-start">
-                    <!-- Order Details Section -->
-                    <div class="col-md-7">
-                        <h5 class="text-dark">Order Details:</h5>
-                    <form method="post" asp-controller="Order" asp-action="UpdateOrderDetails">
-                            <input asp-for="Order.Id" hidden/>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input asp-for="Order.Name" type="text" class="form-control" id="name" placeholder="Enter your name"required>
-                                <span asp-validation-for="Order.Name" class="text-danger"></span>
-                            </div>
-                            <div class="mb-7">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input asp-for="Order.PhoneNumber" type="text" class="form-control" id="phone" placeholder="Enter your phone number"required>
-                                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="city" class="form-label">City</label>
-                                    <input asp-for="Order.City" type="text" class="form-control" id="city" placeholder="City"required>
-                                    <span asp-validation-for="Order.City" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="address" class="form-label">Street Address</label>
-                                    <input asp-for="Order.Address" type="text" class="form-control" id="address" placeholder="Enter your address" required>
-                                    <span asp-validation-for="Order.Address" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="mb-3 d-flex justify-content-center align-items-center">
-                                <button type="submit" class="btn-six btn-click py-2 px-5 w-100 rounded-2"><span class="fw-bolder text-dark">Update Order Details</span></button>
-                            </div>
-                          </form>
-                    </div>
-                    <!-- Order Summary Section -->
-                    <div class="col-md-5">
-                        <h5 class="text-dark">Order Summary:</h5>
-                    <div class="border border-secondary-subtle py-2 pb-0 rounded-2">
-                        <h5 class="fw-bold text-center">
-                            Order Status: 
-                            <span class="@(Model.Order.Status == "Pending" ? "text-danger" : "text-success")">
-                                @Model.Order.Status
-                            </span>
-                        </h5>
-                    </div>
+        </div>
 
-                        <ul class="list-group mb-3">
-                            @foreach (var obj in Model.OrderDetail)
-                            {
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="my-0 fw-bold">@obj.Menu.Name</h6>
-                                        <p class="mb-0">Quantity: <span class="fw-bold">@obj.Quantity</span></p>
-                                        <p class="mb-0">Price: <span class="fw-bold">Rs @obj.Menu.Price.ToString("#,0.00")</span></p>
+        <!-- Card body -->
+        <div class="card-body p-4">
+            <div class="row">
+                <!-- Order Details Section -->
+                <div class="col-md-7 pe-md-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-header bg-light p-3">
+                            <h5 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Customer Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-controller="Order" asp-action="UpdateOrderDetails">
+                                <input asp-for="Order.Id" hidden />
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Customer Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input asp-for="Order.Name" type="text" class="form-control" id="name" placeholder="Enter customer name" required>
                                     </div>
-                                    <div class="text-end">
-                                        <p class="mb-0">Sub-total:<span class="fw-bold">Rs @((obj.Menu.Price * @obj.Quantity).ToString("#,0.00"))</span></p>
+                                    <span asp-validation-for="Order.Name" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                        <input asp-for="Order.PhoneNumber" type="text" class="form-control" id="phone" placeholder="Enter phone number" required>
                                     </div>
-                                </li>
-                            }
-                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                <h3><span class="fw-bold">Total</span></h3>
-                                <h3><strong>Rs @Model.Order.TotalAmount.ToString("#,0.00")</strong></h3>
-                            </li>
-                        </ul>
-                    <!-- Order Completion Form -->
-                    <form method="post" asp-controller="Order" asp-action="OrderComplete">
-                        <input type="hidden" asp-for="Order.Id" /> <!-- Ensure order ID is sent -->
-                        <button type="submit" class="btn-seven px-5 py-2 rounded-2 btn-click w-100">
-                            Complete Order
-                        </button>
-                    </form>
+                                    <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="city" class="form-label">City</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input asp-for="Order.City" type="text" class="form-control" id="city" placeholder="City" required>
+                                        </div>
+                                        <span asp-validation-for="Order.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="address" class="form-label">Street Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <input asp-for="Order.Address" type="text" class="form-control" id="address" placeholder="Enter address" required>
+                                        </div>
+                                        <span asp-validation-for="Order.Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        <i class="bi bi-save me-2"></i>Update Customer Information
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Section -->
+                <div class="col-md-5 mt-4 mt-md-0">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-header bg-light p-3">
+                            <h5 class="mb-0"><i class="bi bi-cart-check-fill me-2"></i>Order Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Status Badge -->
+                            <div class="mb-3 text-center">
+                                <span class="fs-5 @(@Model.Order.Status == Status.Complete ? "badge bg-success" : "badge bg-danger")">@Model.Order.Status</span>
+                            </div>
+
+                            <!-- Order Items -->
+                            <div class="list-group mb-3 shadow-lg">
+                                @foreach (var obj in Model.OrderDetail)
+                                {
+                                    <div class="list-group-item border-0 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="my-0 fw-bold">@obj.Menu.Name</h6>
+                                                <div class="d-flex text-muted">
+                                                    <span class="me-3">
+                                                        <i class="bi bi-hash me-1"></i>@obj.Quantity
+                                                    </span>
+                                                    <span>
+                                                        <i class="bi bi-tag-fill me-1"></i><i class="bi bi-currency-rupee text-muted"></i> @obj.Menu.Price.ToString("#,0.00")
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="text-end">
+                                                <p class="mb-0 fw-bold"><i class="bi bi-currency-rupee text-muted"></i> @((obj.Menu.Price * @obj.Quantity).ToString("#,0.00"))</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Total -->
+                            <div class="bg-light shadow-lg p-3 rounded-3 mb-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0 fw-bold">Total Amount</h5>
+                                    <h5 class="mb-0 fw-bold"><i class="bi bi-currency-rupee text-muted"></i>@Model.Order.TotalAmount.ToString("#,0.00")</h5>
+                                </div>
+                            </div>
+
+                            <!-- Order Completion Form -->
+                            <form method="post" asp-controller="Order" asp-action="OrderComplete">
+                                <input type="hidden" asp-for="Order.Id" /> <!--Ensures order id is passed-->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check-circle me-2"></i>Complete Order
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
+</div>

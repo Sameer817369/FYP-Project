@@ -7,7 +7,7 @@ namespace RMS.Domain.Models
     public class OrderDetail
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } 
         [Required]
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]

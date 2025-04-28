@@ -1,0 +1,129 @@
+﻿@model Inventory
+
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow">
+        <!-- Header -->
+        <div class="card-header bg-primary bg-gradient p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>Create Inventory Item
+                </h2>
+                <a asp-controller="Inventroy" asp-action="Index" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i>Back to List
+                </a>
+            </div>
+        </div>
+        <!-- Card body  -->
+        <div class="card-body p-4">
+            <form method="post" class="row" enctype="multipart/form-data">
+                <input asp-for="Id" hidden />
+                <div class="col-12">
+                    <!-- Item details card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-info-circle me-2"></i>Basic Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Name input -->
+                                <div class="col-md-12">
+                                    <label asp-for="Name" class="form-label">Item Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-tag"></i>
+                                        </span>
+                                        <input asp-for="Name" class="form-control" placeholder="Enter item name" />
+                                    </div>
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+                                <!-- Quantity input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Quantity" class="form-label">Quantity</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-123"></i>
+                                        </span>
+                                        <input asp-for="Quantity" type="number" class="form-control" placeholder="Enter quantity" />
+                                    </div>
+                                    <span asp-validation-for="Quantity" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Unit dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Unit" class="form-label">Unit</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-collection"></i>
+                                        </span>
+                                        <select asp-for="Unit" class="form-select" asp-items="Html.GetEnumSelectList<InventoryUnit>()">
+                                            <option disabled selected>Select Unit</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Unit" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category and Status card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-gear me-2"></i>Category & Status
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Category dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Category" class="form-label">Category</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-collection"></i>
+                                        </span>
+                                        <select asp-for="Category" class="form-select" asp-items="Html.GetEnumSelectList<InventoryCategory>()">
+                                            <option disabled selected>Select Category</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Category" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Status dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Status" class="form-label">Status</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-toggles"></i>
+                                        </span>
+                                        <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<InventoryStatus>()">
+                                            <option disabled selected>Select Status</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Status" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form actions -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a asp-controller="Inventroy" asp-action="Index" class="btn btn-outline-secondary form-control">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary form-control">
+                            <i class="bi bi-check-circle me-1"></i>Create Inventory Item
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

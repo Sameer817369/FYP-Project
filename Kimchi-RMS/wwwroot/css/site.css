@@ -16,15 +16,15 @@ a.navbar-brand {
 
 
 body {
-    font-family: serif;
+    font-family: "Poppins", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family:   serif;
+    font-family: "Poppins", sans-serif;
 }
 
 p, a, li, span, button {
-    font-family: serif;
+    font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -561,7 +561,6 @@ bg-success {
         transform: scale(1.05);
     }
 .btn-third {
-    font-family:serif;
     color: black;
     background-color: #fff;
     border-color: #000000;
@@ -578,7 +577,6 @@ bg-success {
     }
 .btn-fourth {
     background-color:transparent;
-    font-family: serif;
     color: white;
     border-color: black;
     text-decoration: none;
@@ -592,7 +590,6 @@ bg-success {
         transform: scale(1.06);
     }
 .btn-five {
-    font-family: serif;
     color: white;
     background-color: darkgreen;
     border-color: white;
@@ -608,7 +605,6 @@ bg-success {
         transform: scale(1.06);
     }
 .btn-six {
-    font-family: serif;
     color: white;
     background-color: darkorange;
     text-decoration: none;
@@ -618,11 +614,11 @@ bg-success {
 
     .btn-six:hover {
         transform: scale(1.05);
+        opacity:0.8;
         color: white;
     }
 
 .btn-seven {
-    font-family: serif;
     color: white;
     background-color: darkgreen;
     text-decoration: none;
@@ -632,10 +628,10 @@ bg-success {
 
     .btn-seven:hover {
         transform: scale(1.05);
+        opacity:0.8;
         color: white;
     }
 .btn-eight {
-    font-family: serif;
     color: white;
     background-color: orangered;
     text-decoration: none;
@@ -646,6 +642,7 @@ bg-success {
     .btn-eight:hover {
         transform: scale(1.05);
         color: white;
+        opacity:0.8;
     }
 
 .menu-item h5 {
@@ -736,6 +733,110 @@ bg-success {
     border: 1px solid #aaa; 
     cursor: not-allowed; 
     opacity: 0.6; 
-
 }
 
+.team-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+.btn-nine {
+    color: white;
+    background-color: orangered;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-nine:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+    color: white;
+}
+.hover-shadow:hover {
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 4rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #f39c12;
+        transform: scale(1.2); 
+        transition: color 0.3s ease, transform 0.2s ease;
+    }
+.menu-item-img {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+}
+
+.description-text {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.btn-ten {
+    color: black;
+    background-color: ghostwhite;
+    text-decoration: none;
+    border:1px solid;
+    border-color:gray;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+    .btn-ten:hover {
+        transform: scale(1.05);
+        opacity: 0.8;
+        color: white;
+        background-color:black;
+    }
+
+.nav-link.active {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 50px;
+    margin-bottom: 50px;
+}
+
+    .timeline-item:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background-color: #198754;
+    }
+
+    .timeline-item .timeline-dot {
+        position: absolute;
+        left: -10px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #198754;
+    }

@@ -5,26 +5,67 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-light d-flex align-items-center">
+        <i class="bi bi-person-circle me-2 text-success"></i>
+        <h3 class="mb-0 fs-4">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <div class="row">
+            <div class="col-lg-8 col-md-10">
+                <form id="profile-form" method="post" class="mt-2">
+                    <div asp-validation-summary="ModelOnly" class="text-danger rounded p-2 bg-danger-subtle mb-3" role="alert"></div>
+
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title fs-5">Account Information</h5>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Name" class="form-control" placeholder="Enter your name."  />
+                                <label asp-for="Input.Name" class="form-label"></label>
+                                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                            </div>
+                            <div class="row ">
+                                <div class="form-floating mb-3 col-md-6">
+                                    <input asp-for="Input.City" class="form-control" placeholder="Enter your city." />
+                                    <label asp-for="Input.City" class="form-label ms-2"></label>
+                                    <span asp-validation-for="Input.City" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3 col-md-6">
+                                    <input asp-for="Input.Street" class="form-control" placeholder="Enter your address" />
+                                    <label asp-for="Input.Street" class="form-label ms-2"></label>
+                                    <span asp-validation-for="Input.Street" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-floating">
+                                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button id="update-profile-button" type="submit" class="btn-seven rounded-2 py-2 px-5 btn-click">
+                            <i class="bi bi-check2 me-1"></i> Save changes
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+            <div class="col-lg-4 col-md-12 mt-4 mt-lg-0">
+                <div class="card bg-light border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5">Profile Tips</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-shield-check text-primary me-2"></i>Keep your contact information updated</li>
+                            <li><i class="bi bi-gear text-primary me-2"></i>You can manage other settings in the sidebar</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+        </div>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

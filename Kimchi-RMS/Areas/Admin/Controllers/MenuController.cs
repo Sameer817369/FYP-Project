@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RMS.Application.Service.Interface;
+using RMS.Domain.Enums;
 using RMS.Domain.Models;
 
 namespace Kimchi_RMS.Areas.Admin.Controllers
@@ -18,7 +19,7 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Menu> menuList = _unitOfWork.Menu.GetAll().ToList();
+            var menuList = _unitOfWork.Menu.GetAll().OrderByDescending(u=>u.CreatedDate).ToList();
             return View(menuList); 
         }
         public IActionResult Create()
@@ -28,8 +29,7 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Menu items)
         {
-            if (ModelState.IsValid)
-            {
+            
                 if(items.Image != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(items.Image.FileName).ToLower();
@@ -49,27 +49,26 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
                     TempData["success"] = "Menu Item Created Successfully";
                     return RedirectToAction("Index");
                 }
-                catch (Exception)
+                catch
                 {
                     TempData["error"] = "Menu Item Not Created";
                     return View(items);
                 }
-            }
-            else
-            {
-                return View(items);
-            }
         }
+     
+   
         public IActionResult Update(int? menuId)
         {
-            if (menuId == null || menuId == 0)
+            if (menuId == null)
             {
-                return RedirectToAction("Error", "Home", new { area = "Customer" });
+                 TempData["error"] = "not found";
+                return View();
             }
-            Menu? menuFromDb = _unitOfWork.Menu.GetById(u => u.Id == menuId);
+            var menuFromDb = _unitOfWork.Menu.GetById(u => u.Id == menuId);
             if (menuFromDb == null)
             {
-                return RedirectToAction("Error", "Home", new { area = "Customer" });
+                TempData["error"] = "not found";
+                return View(menuFromDb);
             }
             return View(menuFromDb);
         }
@@ -102,10 +101,10 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
                     TempData["success"] = "Menu Item Updated Successfully";
                     return RedirectToAction("Index");
                 }
-                catch (Exception)
+                catch
                 {
                     TempData["error"] = "Error! Menu Item Not Updated";
-                    return NotFound();
+                    return RedirectToAction("Index");
                 }
             }
             else
@@ -113,20 +112,6 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
                 return View(items);
             }
         }
-        public IActionResult Delete(int? menuId)
-        {
-            if (menuId == null || menuId == 0)
-            {
-                return RedirectToAction("Error", "Home", new {area="Customer"});
-            }
-            Menu? menuFromDb = _unitOfWork.Menu.GetById(u => u.Id == menuId);
-            if (menuFromDb == null)
-            {
-              return RedirectToAction("Error", "Home", new { area = "Customer" });
-            }
-            return View(menuFromDb);
-        }
- 
         [HttpPost]
         public IActionResult Delete(int menuId)
         {
@@ -155,15 +140,57 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
                 TempData["success"] = "Menu Item Deleted Successfully";
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                // Log the error for debugging
-                Console.WriteLine($"Error deleting menu item: {ex.Message}");
-
-                TempData["error"] = "Error! Menu Item Not Deleted";
-                return RedirectToAction("Index"); // Redirect instead of returning NotFound()
+                TempData["error"] = $"Error! Menu Item Not Deleted";
+                return RedirectToAction("Index"); 
             }
         }
 
+        public IActionResult FilterByCategories(MenuCategory? category)
+        {
+            try
+            {
+                var filteredMenu = category.HasValue
+                    ? _unitOfWork.Menu.GetAll(u => u.Category == category.Value)
+                    : _unitOfWork.Menu.GetAll();
+                if (!filteredMenu.Any())
+                {
+                    return PartialView("~/Areas/Admin/Views/_NotFoundPartial.cshtml");
+                }
+
+                return PartialView("_MenuTablePartial", filteredMenu);
+            }
+            catch
+            {
+                TempData["error"] = "Cannot filter";
+                return RedirectToAction("Index");
+            }
+
+
+        }
+
+        public IActionResult FilterByStatus(MenuStatus? status)
+        {
+            try
+            {
+                var filteredMenu = status.HasValue
+                    ? _unitOfWork.Menu.GetAll(u => u.Status == status.Value)
+                    : _unitOfWork.Menu.GetAll();
+
+                if (!filteredMenu.Any())
+                {
+                    return PartialView("~/Areas/Admin/Views/_NotFoundPartial.cshtml");
+                }
+
+                return PartialView("_MenuTablePartial", filteredMenu);
+            }
+            catch
+            {
+                TempData["error"] = "Cannot filter the data";
+                return RedirectToAction("Index");
+            }
+
+        }
     }
 }

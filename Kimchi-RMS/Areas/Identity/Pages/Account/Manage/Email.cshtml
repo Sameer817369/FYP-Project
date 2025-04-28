@@ -5,37 +5,81 @@
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="email-form" method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            @if (Model.IsEmailConfirmed)
-            {
-                <div class="form-floating mb-3 input-group">
-                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                        <div class="input-group-append">
-                            <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-light d-flex align-items-center">
+        <i class="bi bi-envelope me-2 text-success"></i>
+        <h3 class="mb-0 fs-4">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <div class="row">
+            <div class="col-lg-8 col-md-10">
+                <form id="email-form" method="post" class="mt-2">
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title fs-5">Current Email</h5>
+
+                            @if (Model.IsEmailConfirmed)
+                            {
+                                <div class="form-floating mb-2 input-group">
+                                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
+                                    <div class="input-group-text bg-success-subtle">
+                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                    </div>
+                                    <label asp-for="Email" class="form-label"></label>
+                                </div>
+                                <div class="text-muted small">Your email has been verified</div>
+                            }
+                            else
+                            {
+                                <div class="form-floating mb-2">
+                                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
+                                    <label asp-for="Email" class="form-label"></label>
+                                </div>
+                                <div class="alert alert-warning py-2 d-flex align-items-center" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    <div>
+                                        Email not verified.
+                                        <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-sm btn-warning ms-2">
+                                            <i class="bi bi-envelope-check me-1"></i> Send verification email
+                                        </button>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                    <label asp-for="Email" class="form-label"></label>
-                </div>
-            }
-            else
-            {
-                <div class="form-floating mb-3">
-                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                    <label asp-for="Email" class="form-label"></label>
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                </div>
-            }
-            <div class="form-floating mb-3">
-                <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
-                <label asp-for="Input.NewEmail" class="form-label"></label>
-                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                    </div>
+
+                    <h5 class="mb-3">Change Email</h5>
+                    <div class="form-floating mb-4">
+                        <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
+                        <label asp-for="Input.NewEmail" class="form-label"></label>
+                        <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn-seven rounded-2 py-2 px-5 btn-click">
+                            <i class="bi bi-arrow-repeat me-1"></i> Change email
+                        </button>
+                    </div>
+                </form>
             </div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Change email</button>
-        </form>
+
+            <div class="col-lg-4 col-md-12 mt-4 mt-lg-0">
+                <div class="card bg-light border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5">Email Information</h5>
+                        <p class="card-text">Your email address is used for:</p>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-shield-check text-primary me-2"></i>Account security alerts</li>
+                            <li class="mb-2"><i class="bi bi-envelope text-primary me-2"></i>Communication</li>
+                            <li class="mb-2"><i class="bi bi-key text-primary me-2"></i>Password recovery</li>
+                            <li><i class="bi bi-bell text-primary me-2"></i>Important notifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

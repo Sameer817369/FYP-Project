@@ -1,75 +1,152 @@
 ﻿@model Menu
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Update Menu</h2>
+
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow">
+        <!-- Header -->
+        <div class="card-header bg-primary bg-gradient p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>Update Menu Item
+                </h2>
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i>Back to List
+                </a>
             </div>
         </div>
-    </div>
-    <div class="card-body p-4">
-        <form method="post" class="row" enctype="multipart/form-data" id="updateForm">
-            <input asp-for="Id"hidden/>
-            <div class="col-10">
-                <div class="border p-3">
-                    @* <div asp-validation-summary="All"></div> *@
-                    <div class="form-floating py-2 col-12">
-                        <input asp-for="Name" class="form-control border-0 shadow" />
-                        <label asp-for="Name" class="ms-2"></label>
-                        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <!-- Card body  -->
+        <div class="card-body p-4">
+            <form method="post" class="row" enctype="multipart/form-data" id="updateForm">
+                <input asp-for="Id" hidden />
+                <div class="col-12">
+                    <!-- Item details card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-info-circle me-2"></i>Basic Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Name input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Name" class="form-label">Item Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-tag"></i>
+                                        </span>
+                                        <input asp-for="Name" class="form-control" placeholder="Enter item name" />
+                                    </div>
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Price input -->
+                                <div class="col-md-6">
+                                    <label asp-for="Price" class="form-label">Price (<i class="bi bi-currency-rupee"></i>)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-currency-rupee"></i>
+                                        </span>
+                                        <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                                    </div>
+                                    <span asp-validation-for="Price" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Description input -->
+                                <div class="col-12">
+                                    <label asp-for="Description" class="form-label">Description</label>
+                                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter item description"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-floating py-2 col-12">
-                        <textarea asp-for="Description" class="form-control border-0 shadow"></textarea>
-                        <label asp-for="Description" class="ms-2"></label>
-                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    <!-- Category and Status card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-gear me-2"></i>Category & Status
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Category dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Category" class="form-label">Category</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-collection"></i>
+                                        </span>
+                                        <select asp-for="Category" class="form-select" asp-items="Html.GetEnumSelectList<MenuCategory>()">
+                                            <option disabled selected>Select Category</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Category" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Status dropdown -->
+                                <div class="col-md-6">
+                                    <label asp-for="Status" class="form-label">Status</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="bi bi-toggles"></i>
+                                        </span>
+                                        <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<MenuStatus>()">
+                                            <option disabled selected>Select Status</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Status" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-floating py-2 col-12">
-                        <input asp-for="Price" type="number" class="form-control border-0 shadow" />
-                        <label asp-for="Price" class="ms-2"></label>
-                        <span asp-validation-for="Price" class="text-danger"></span>
+
+                    <!-- Image upload card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-image me-2"></i>Image Upload
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- Image upload -->
+                                <div class="col-12">
+                                    <label asp-for="Image" class="form-label">Menu Item Image</label>
+                                    <input asp-for="ImgUrl" hidden class="form-control" />
+                                    <input asp-for="Image" class="form-control" accept="image/*" />
+                                    <span asp-validation-for="ImgUrl" class="text-danger small"></span>
+                                    <div class="form-text">
+                                        <i class="bi bi-info-circle me-1"></i>Recommended image size: 800x600 pixels, max 2MB
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Image preview -->
+                            <div class="col-md-2 mt-2 text-center">
+                                <img src="@Url.Content("~/" + @Model.ImgUrl)" class="img-fluid rounded shadow-sm" alt="Menu Image" />
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="form-floating py-2 col-12">
-                        <select asp-for="Category" class="form-control border-0 shadow" asp-items="Html.GetEnumSelectList<MenuCategory>()">
-                            <option>Select Category</option>
-                        </select>
-                        <label asp-for="Category" class="ms-2"></label>
-                        <span asp-validation-for="Category" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating py-2 col-12">
-                        <select asp-for="Status" class="form-control border-0 shadow" asp-items="Html.GetEnumSelectList<MenuStatus>()">
-                            <option>Select Status</option>
-                        </select>
-                        <label asp-for="Status" class="ms-2"></label>
-                        <span asp-validation-for="Status" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating py-2 col-12">
-                        <input asp-for="Image" class="form-control border-0 shadow" />
-                        <input asp-for="ImgUrl"hidden class="form-control border-0 shadow" />
-                        <label asp-for="ImgUrl" class="ms-2"></label>
-                        <span asp-validation-for="ImgUrl" class="text-danger"></span>
-                    </div>
-                    <div class="row pt-2">
-                        <div class="col-6 col-md-3">
+
+                    <!-- Form actions -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                          <button asp-controller="Menu" asp-action="Index" class="btn btn-outline-secondary form-control">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                          </button>
                             <button type="button"
                                     onclick="confirmAction(event, 'updateForm', 'Update', 'darkgreen', 'red')"
-                                    class="mt-3 btn btn-success form-control"><i class="bi bi-check-circle"></i> 
+                                    class="btn btn-primary form-control">
+                                <i class="bi bi-check-circle"></i>
                                 Update
                             </button>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <a asp-controller="Menu" asp-action="Index" class="mt-3 btn btn-outline-secondary border form-control"><i class="bi bi-arrow-left-circle"></i> Back</a>
-                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <img src="@Url.Content("~/" + @Model.ImgUrl)" width="100%" alt="Menu Image" style="border:1px solid black; border-radius:5px;" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-
-
 
 @section Scripts {
     @{

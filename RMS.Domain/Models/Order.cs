@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using RMS.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,7 +18,7 @@ namespace RMS.Domain.Models
         [Required]
         public double TotalAmount { get; set; }
         [Required]
-        public string Status { get; set; }
+        public Status Status { get; set; }
         [Required]
         [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
         public string Name { get; set; }

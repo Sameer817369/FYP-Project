@@ -8,6 +8,10 @@
         IOrderRepository Order { get; }
         IOrderDetailRepository OrderDetail { get; }
         IBookingRepository Booking { get; }
+        IFeedBackRepository FeedBack { get; }
+        IEmoloyeeRepository Employee { get; }
+        ITransactionRepository Transaction { get; }
+        IInventoryRepository Inventory { get; }
         void Save();
     }
 }

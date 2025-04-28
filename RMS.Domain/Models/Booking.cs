@@ -36,7 +36,7 @@ namespace RMS.Domain.Models
         public int NumberOfPlates { get; set; }
         [Required]
         public EventType EventType { get; set; }
-        public string Status { get; set; }
+        public BookingStatus Status { get; set; }
 
     }
 }

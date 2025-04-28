@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RMS.Application.Service;
 using RMS.Application.Service.Interface;
 using RMS.Domain.Enums;
 using RMS.Domain.Models;
 
 namespace Kimchi_RMS.Views.Shared.ViewComponents
 {
-    public class MenuCardViewComponent : ViewComponent
+    public class MenuViewComponent : ViewComponent
     {
         //dependency injection
         private readonly IUnitOfWork _unitOfWork;
 
-        public MenuCardViewComponent(IUnitOfWork unitOfWork)
+        public MenuViewComponent(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         //method to dynamically call the food menu items in the index page
-        public IViewComponentResult Invoke(string title)
+        public async Task<IViewComponentResult> InvokeAsync(string title)
         {
             IEnumerable<Menu> foodItems;
 

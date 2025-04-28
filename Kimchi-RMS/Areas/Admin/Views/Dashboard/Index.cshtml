@@ -1,3 +1,145 @@
 ﻿
-    <h1>Hello Admin</h1>
+    <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="bg-primary bg-gradient text-white p-4 rounded shadow">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                        <h3 class="mb-0 fw-bold"> <i class="bi bi-speedometer2 me-2"></i>Dashboard</h3>
+                            <p class="mb-0 opacity-75">Analytics Overview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Booking data -->
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body position-relative">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="d-flex flex-column">
+                                    <div class="text-warning border-bottom border-warning pb-2 mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-2">
+                                            <i class="bi bi-calendar-check text-warning"></i>
+                                            </div>
+                                            <span class="text-uppercase fw-bold small">Total Bookings Completed</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-1 fw-bold">
+                                    <span id="spanTotalBookingCount"></span>
+                                    </h4>
+                                    <p class="text-muted small mb-0" id="sectionBookingCount"></p>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="float-end">
+                                <div id="totalBookingsChart" data-colors='["--bs-warning"]'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-75 justify-content-center align-items-center chart-spinner d-none" style="z-index: 10;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Order data -->
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body position-relative">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="d-flex flex-column">
+                                    <div class="text-primary border-bottom border-primary pb-2 mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2">
+                                            <i class="bi bi-cart-check text-primary"></i>
+                                            </div>
+                                            <span class="text-uppercase fw-bold small">Total Orders Completed</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-1 fw-bold">
+                                        <span id="spanTotalOrderCount"></span>
+                                    </h4>
+                                    <p class="text-muted small mb-0" id="sectionOrderCount"></p>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="float-end">
+                                <div id="totalOrderChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-75 justify-content-center align-items-center chart-spinner d-none" style="z-index: 10;">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue data -->
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body position-relative">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="d-flex flex-column">
+                                    <div class="text-success border-bottom border-success pb-2 mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-success bg-opacity-10 p-2 rounded-circle me-2">
+                                            <i class="bi bi-currency-rupee text-success"></i>
+                                            </div>
+                                            <span class="text-uppercase fw-bold small">Total Revenue</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-1 fw-bold">
+                                        <span id="spanTotalRevenueCount"></span>
+                                    </h4>
+                                    <p class="text-muted small mb-0" id="sectionRevenueCount"></p>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="float-end">
+                                <div id="totalRevenueChart" data-colors='["--bs-success"]'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-75 justify-content-center align-items-center chart-spinner d-none" style="z-index: 10;">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Line chart -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-body position-relative">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h5 class="card-title fw-bold">New Orders in Past 30 Days</h5>
+                                <p class="text-muted small mb-0">Order trends and performance analysis</p>
+                            </div>
+                        </div>
+                        <div class="pt-2" style="min-height: 300px;" id="orderLineChart"></div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-75 justify-content-center align-items-center chart-spinner d-none" style="z-index: 10;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

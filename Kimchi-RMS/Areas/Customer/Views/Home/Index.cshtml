@@ -1,47 +1,223 @@
-﻿<section>
-    <div style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/restaurant.jpg');height:80vh;" 
-                class="d-flex flex-column justify-content-center align-items-center text-center text-white backgroung-alignment">
-                <h1 class="fw-bold">Savor The Authentic Taste of Kimchi</h1>
-                <p >Experience the rich flavours and vibrant culture Nepali cusine. Join us for a delightful<br /> meal that  will tantalize your taste bud</p>
-                <div class="d-flex justify-content-center">
-                    <a asp-area="Customer" asp-controller="Home" asp-action="Menu" class="btn-fourth rounded-2 border px-5 py-2 btn-click">Order</a>
-                    <a asp-area="Customer" asp-controller="Booking" asp-action="Index" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click">Reserve</a>
+﻿
+    <!-- Hero Section (Restaurant-focused) - Dark Theme -->
+    <section class="hero-section bg-dark text-white">
+        <div class="container-fluid p-0 position-relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="position-absolute top-50 end-0 translate-middle-y d-none d-lg-block">
+                <i class="bi bi-circle-fill text-success opacity-25" style="font-size: 200px;"></i>
+            </div>
+            <div class="position-absolute bottom-0 start-0 d-none d-lg-block">
+                <i class="bi bi-circle-fill text-success opacity-10" style="font-size: 150px;"></i>
+            </div>
+
+            <div class="container py-5">
+                <div class="row align-items-center py-5">
+                    <!-- Image on Left for this style -->
+                    <div class="col-lg-5 mb-5 mb-lg-0 order-lg-1 order-2">
+                        <div class="position-relative">
+                            <div class="border border-success border-opacity-25 border-4 rounded-4 position-absolute top-0 start-0 bottom-0 end-0 translate-middle-sm" style="transform: rotate(-3deg);"></div>
+                            <img src="/images/Hero-bg.jpg" alt="Kimchi Atmosphere" class="img-fluid rounded-4 shadow-lg position-relative">
+
+                            <!-- Badge -->
+                            <div class="position-absolute top-0 end-0 translate-middle">
+                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 100px; height: 100px;">
+                                    <div class="text-center">
+                                        <h6 class="mb-0 fw-bold">Our</h6>
+                                        <small>Ambience</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content on Right -->
+                    <div class="col-lg-7 order-lg-2 order-1">
+                        <div class="d-inline-block bg-success bg-opacity-25 rounded-pill mb-4 px-3 py-2 border border-success border-opacity-50">
+                            <span class="fw-bold text-success">Authentic Korean & Nepali Fusion <i class="bi bi-stars"></i></span>
+                        </div>
+
+                        <h1 class="display-3 fw-bold mb-4">Discover <span class="text-success">Kimchi</span> With A Nepali Twist</h1>
+
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <p class="lead mb-4">A culinary journey blending Korean traditions with Nepali spices. Every dish tells a story of cultural fusion and innovative flavor profiles.</p>
+                            </div>
+                        </div>
+
+                        <!-- Opening Hours -->
+                        <div class="bg-black bg-opacity-50 p-3 rounded-3 d-inline-block mb-4">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <div class="bg-success rounded-circle p-2">
+                                        <i class="bi bi-clock-fill text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 fw-medium">Open Daily: 9:00 AM - 10:00 PM</p>
+                                    <small class="text-success">Special Happy Hours: 6-8 PM</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Buttons with gradient effect -->
+                        <div class="d-flex flex-wrap gap-3 mb-5">
+                            <a asp-area="customer" asp-controller="Booking" asp-action="Index"  class="btn-seven btn-click btn-lg rounded-pill  px-4 py-3 shadow" role="button">
+                            <i class="bi bi-calendar-check me-2"></i> Make Reservations
+                            </a>
+                            <a asp-area="customer" asp-controller="Home" asp-action="Menu" class="btn-ten btn-click btn-lg rounded-pill px-4 py-3 border-2" role="button">
+                                <i class="bi bi-menu-button me-2"></i>Explore Menu
+                            </a>
+                        </div>
+
+                        <!-- Features in a different style -->
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-4">
+                                <div class="bg-black bg-opacity-50 rounded-3 p-3 h-100">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-award-fill text-success fs-4 me-3"></i>
+                                        <span class="fw-semibold">Professional Chefs</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-black bg-opacity-50 rounded-3 p-3 h-100">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-hand-thumbs-up-fill text-success fs-4 me-3"></i>
+                                        <span class="fw-semibold">Orgainc Resources</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-black bg-opacity-50 rounded-3 p-3 h-100">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-heart-fill text-success fs-4 me-3"></i>
+                                        <span class="fw-semibold">Warm Ambience</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-    </div> 
-</section>
+            </div>
+        </div>
+    </section>
 
-<section>
-    <div class="d-flex flex-column justify-content-center align-items-center text-dark mt-5">
-        <h1 class="fw-bold">Welcome To Kimchi</h1>
-        <p class="text-center text-muted pt-1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium<br />totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-        <a class="py-2 rounded-2 border btn-third border-black btn-click px-5 shadow-sm mt-2">About Us</a>
+<!-- About Section - Dark Theme -->
+<section class="pt-1 pb-5 bg-dark text-white">
+    <div class="container mb-5">
+        <div class="d-flex flex-column justify-content-center align-items-center my-4">
+            <div class="d-inline-block bg-success bg-opacity-25 rounded-pill mb-2 px-3 py-2 border border-success border-opacity-50">
+                <span class="fw-bold text-success">AUTHENTIC CUISINE <i class="bi bi-stars"></i></span>
+            </div>
+            <h1 class="fw-bold mb-3 display-5 text-center">Welcome To <span class="text-success">Kimchi</span></h1>
+            <div class="mx-auto bg-success" style="width: 50px; height: 3px;"></div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8">
+                    <p class="text-center mb-4">Experience the perfect fusion of traditional Korean flavors and Nepali culinary excellence. Each dish is crafted with authentic ingredients and prepared with care to deliver an unforgettable dining experience.</p>
+                </div>
+            </div>
+            <a asp-controller="home" asp-action="About" class="btn-seven btn-lg px-5 py-3 rounded-pill shadow btn-click">
+                <i class="bi bi-info-circle me-2"></i>About Us
+            </a>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="row mt-5 g-4">
+            <div class="col-md-4">
+                <div class="card border-0 bg-black bg-opacity-50 shadow-lg h-100 team-card rounded-4 team-card">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-success bg-opacity-25 p-3 mx-auto mb-3 border border-success border-opacity-50" style="width: 70px; height: 70px;">
+                            <i class="bi bi-house-heart fs-3 text-success"></i>
+                        </div>
+                        <h4 class="card-title text-white fw-bold">Warm Atmosphere</h4>
+                        <p class="card-text text-white">Enjoy your meal in our cozy and welcoming restaurant setting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-black bg-opacity-50 shadow-lg h-100 team-card rounded-4">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-success bg-opacity-25 p-3 mx-auto mb-3 border border-success border-opacity-50" style="width: 70px; height: 70px;">
+                            <i class="bi bi-award fs-3 text-success"></i>
+                        </div>
+                        <h4 class="card-title fw-bold text-white">Quality Ingredients</h4>
+                        <p class="card-text text-white">We use only the freshest and most authentic ingredients in our dishes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-black bg-opacity-50 shadow-lg h-100 team-card rounded-4">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-success bg-opacity-25 p-3 mx-auto mb-3 border border-success border-opacity-50" style="width: 70px; height: 70px;">
+                            <i class="bi bi-people fs-3 text-success"></i>
+                        </div>
+                        <h4 class="card-title fw-bold text-white">Expert Chefs</h4>
+                        <p class="card-text text-white">Our skilled chefs bring years of experience in Korean and Nepali cuisine.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<section style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/menu-background.jpg'); height:fit-content;">
-    <div class="d-flex flex-column justify-content-center align-items-center text-white mt-5 backgroung-alignment">
-        <h1 class="mt-5">Our Specials</h1>
-        <p>eaque ipsa quae ab illo inventore veritatis et quasi</p>
+<!-- Menu Section - Dark Theme -->
+<section class="pt-5 bg-dark text-white position-relative overflow-hidden">
+    <!-- Decorative Elements similar to hero section -->
+    <div class="position-absolute end-0 d-none d-lg-block" style="top:150px">
+        <i class="bi bi-circle-fill text-success opacity-10" style="font-size: 150px;"></i>
     </div>
-    <div class=" container d-flex justify-content-center align-items-center w-75 mt-5">
-        @*Invocking the viewcomponent method which renders the card dynamically from database*@
-        @await Component.InvokeAsync("MenuCard", new { title = "New Entries" })
-        @await Component.InvokeAsync("MenuCard", new { title = "Kimchi Specials" }) 
+    <div class="position-absolute bottom-0 start-0 d-none d-lg-block">
+        <i class="bi bi-circle-fill text-success opacity-25" style="font-size: 200px;"></i>
+    </div>
+
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center align-items-center mb-5 position-relative">
+            <div class="d-inline-block bg-success bg-opacity-25 rounded-pill mb-2 px-3 py-2 border border-success border-opacity-50">
+                <span class="fw-bold text-success">TASTE EXCELLENCE <i class="bi bi-stars"></i></span>
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Our <span class="text-success">Specials</span></h1>
+            <div class="mx-auto bg-success" style="width: 50px; height: 3px;"></div>
+            <p class="lead mt-3">Discover our chef's signature dishes and seasonal specialties</p>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center mt-4">
+            @*Invoking the viewcomponent method which renders the card dynamically from database*@
+            @await Component.InvokeAsync("MenuCard", new { title = "New Entries" })
+            @await Component.InvokeAsync("MenuCard", new { title = "Kimchi Specials" })
+        </div>
     </div>
 </section>
 
-<section class="mt-5">
-    <partial name="_CardPartial" />
-</section>
-
-<section class="backgroung-alignment" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/reservation.jpg'); height:fit-content;">
-    <div class=" d-flex flex-column justify-content-center align-items-center mt-5 text-white">
-            <h1 class="fw-bold mt-5">Reserve Your Banquet Today</h1>
-            <p class="text-center mt-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium<br />totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-        <a type="button" asp-area="Customer" asp-controller="Booking" asp-action="Index" class="btn-fourth rounded-2 border py-2 px-5 mx-2 btn-click mb-5 mt-4">Reserve Now</a>
+<!-- Feedback Section - Dark Theme -->
+<section class="pt-5 bg-dark text-white">
+    <!-- Decorative Element -->
+    <div class="container-fluid bg-dark">
+        @await Component.InvokeAsync("FeedbackCard")
     </div>
 </section>
 
 
-
-
+<!-- Reservation Section - Dark Theme -->
+<section class="pt-5 pb-5 bg-dark text-white position-relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="position-absolute bottom-0 start-0 d-none d-lg-block">
+        <i class="bi bi-circle-fill text-success opacity-15" style="font-size: 150px;"></i>
+    </div>
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="d-inline-block bg-success bg-opacity-25 rounded-pill mb-2 px-3 py-2 border border-success border-opacity-50">
+                <span class="fw-bold text-success">MAKE A RESERVATION <i class="bi bi-stars"></i></span>
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Reserve Your <span class="text-success">Banquet</span> Today</h1>
+            <div class="mx-auto bg-success" style="width: 50px; height: 3px;"></div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8">
+                    <p class="text-center mb-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
+                </div>
+            </div>
+            <a type="button" asp-area="Customer" asp-controller="Booking" asp-action="Index" class="btn-seven btn-lg rounded-pill py-3 px-5 btn-click">
+                <i class="bi bi-calendar2-check me-2"></i>Reserve Now
+            </a>
+        </div>
+    </div>
+    <hr class="mt-5 border-3 border-success" />
+</section>

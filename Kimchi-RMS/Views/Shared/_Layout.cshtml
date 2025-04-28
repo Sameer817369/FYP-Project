@@ -12,54 +12,102 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!--open script map-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </head>
-<body>
+<body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom bg-success">
-            <div class="container-fluid">
-                <a class="navbar-brand ms-3" asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/kimchi_logo.jpg"style="width:45px;border-radius:30px;"/></a>
+        <nav class="navbar navbar-expand-sm bg-dark fixed-top py-3 border-bottom border-success">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="rounded-circle overflow-hidden shadow-sm me-2" style="width:45px;height:45px;">
+                        <img src="/images/kimchi_logo.jpg" class="img-fluid" alt="Kimchi Logo" />
+                    </div>
+                    <span class="d-inline-block text-success fw-bold fs-4">Kimchi</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list text-white fs-1"></i>
                 </button>
                 <div class="navbar-collapse d-sm-inline-flex collapse">
-                    <ul class="navbar-nav fw-bold me-3 ms-auto">
+                    <ul class="navbar-nav fw-bold mx-auto d-flex align-items-center gap-2">
                         <li class="nav-item hover-zoom">
-                            <a class="nav-link text-white btn-click" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item hover-zoom">
-                            <a class="nav-link text-white btn-click" asp-area="Customer" asp-controller="Home" asp-action="Menu">About Us</a>
-                        </li>
-                        <li class="nav-item hover-zoom">
-                            <a class="nav-link text-white btn-click" asp-area="Customer" asp-controller="Booking" asp-action="Index">Reservations</a>
-                        </li>
-                        <partial name="_LoginPartial" />
-                        <li class="nav-item ms-3 mt-2">
-                            <a class="btn-fourth rounded-2 border py-2 px-4 mx-1 btn-click" asp-area="Customer" asp-controller="Home" asp-action="Menu">
-                                Order Online
+                            <a class="nav-link text-white btn-click px-3" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door me-1 text-success"></i> Home
                             </a>
                         </li>
-                        <li class="nav-item ms-3 mt-2">
-                            <a class="btn-fourth rounded-2 border py-2 px-4 mx-1 btn-click" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> 
-                                Cart @await Component.InvokeAsync("ShoppingCart")
-                             </a>
+                        <li class="nav-item  hover-zoom">
+                            <a class="nav-link text-white btn-click px-3" asp-area="Customer" asp-controller="Home" asp-action="Menu">
+                                <i class="bi bi-bag me-1 text-success"></i> Menu
+                            </a>
+                        </li>
+                        <li class="nav-item hover-zoom">
+                            <a class="nav-link text-white btn-click px-3" asp-area="Customer" asp-controller="Booking" asp-action="Index">
+                                <i class="bi bi-calendar3 me-1 text-success"></i> Reservations
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown hover-zoom z-3">
+                            <a class="nav-link dropdown-toggle btn text-white btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-journal-text text-success"></i> Resources
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item hover-zoom">
+                                    <a class="nav-link text-dark fw-normal" asp-area="Customer" asp-controller="Feedback" asp-action="Index">
+                                        <i class="bi bi-chat-square-text me-1 text-success"></i> Feedback
+                                    </a>
+                                </li>
+                                <li class="nav-item hover-zoom">
+                                    <a class="nav-link text-dark mt-3 fw-normal" asp-area="Customer" asp-controller="Home" asp-action="About">
+                                        <i class="bi bi-info-circle me-1 text-success"></i> About Us
+                                    </a>
+                                </li>
+                                <li class="nav-item hover-zoom">
+                                    <a class="nav-link text-dark fw-normal mt-3" asp-area="Customer" asp-controller="Home" asp-action="Contact">
+                                        <i class="bi bi-telephone me-1 text-success"></i> Contact Us
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
+                    <div class="d-flex flex-column flex-sm-row align-items-center gap-2">
+                        <partial name="_LoginPartial" />
+                        <a class="btn-six rounded-pill px-4 py-2 btn-click d-flex align-items-center" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                            <i class="bi bi-cart3 me-2"></i><span class="fw-bold"> Cart @await Component.InvokeAsync("ShoppingCart")</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
+
+
+    <!-- Original content -->
     <div class="container-fluid overflow-x-hidden p-0">
-        <main role="main" class="pb-3">
+        <main role="main" style="margin-top:80px;" class="px-2 px-sm-3">
             <partial name="_Notifications" />
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-muted pt-5 bg-light">
+
+    <footer class="footer bg-dark mt-4">
         <partial name="_FooterPartial" />
     </footer>
-
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
+    </svg>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -69,6 +117,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/AJAX.js"></script>
     <script src="~/js/SweetAlerts.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
