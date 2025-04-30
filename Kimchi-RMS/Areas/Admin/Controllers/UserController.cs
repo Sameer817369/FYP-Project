@@ -7,6 +7,7 @@ using RMS.Domain.Enums;
 using RMS.Domain.Models;
 using RMS.Domain.Models.ViewModels;
 using RMS.Infrastructure.Data;
+using System.Data;
 
 namespace Kimchi_RMS.Areas.Admin.Controllers
 {
@@ -141,6 +142,14 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
             else
             {
                 filteredUser = _unitOfWork.User.GetAll();
+            }
+
+            foreach(var user in filteredUser)
+            {
+                var userRoles = _db.UserRoles.ToList();
+                var roles = _db.Roles.ToList();
+                var roleId = userRoles.FirstOrDefault(u => u.UserId == user.Id).RoleId;
+                user.Role = roles.FirstOrDefault(u => u.Id == roleId).Name;
             }
 
             if (!filteredUser.Any())

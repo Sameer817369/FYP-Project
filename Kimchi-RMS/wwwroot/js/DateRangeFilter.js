@@ -16,6 +16,10 @@
             endpoint: "/Admin/PaymentManagement/FilterByDate",
             targetElement: '#transactionTableItems'
         },
+        {
+            endpoint: "/Admin/BookingManagement/FilterByDate",
+            targetElement: '#bookingTableItems'
+        }
     ];
 
     $('#filterBtn').click(function (e) {

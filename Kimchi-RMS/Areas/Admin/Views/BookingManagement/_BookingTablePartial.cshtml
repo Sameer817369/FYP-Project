@@ -48,7 +48,7 @@
 
                     <!-- Status-->
                     <td>
-                        <span class="fw-bolder @(obj.Status == BookingStatus.Approved ? "badge bg-success" :"badge bg-danger")">@obj.Status</span>
+                        <span class="fw-bolder @(obj.Status == BookingStatus.Complete ? "badge bg-success" :"badge bg-danger")">@obj.Status</span>
                     </td>
 
                     <!-- Actions -->
@@ -68,8 +68,8 @@
                                     <button class="dropdown-item text-danger" type="button" onclick="confirmAction(event, 'deleteForm-@obj.Id', 'Delete', '#dc3545', '#6c757d')">
                                         <i class="bi bi-trash me-2"></i>Delete
                                     </button>
-                                    <form method="post" asp-controller="Menu" asp-action="Delete" id="deleteForm-@obj.Id" class="d-none">
-                                        <input type="hidden" name="menuId" value="@obj.Id" />
+                                    <form method="post" asp-controller="BookingManagement" asp-action="Delete" id="deleteForm-@obj.Id" class="d-none">
+                                        <input type="hidden" name="bookingId" value="@obj.Id" />
                                     </form>
                                 </li>
                             </ul>

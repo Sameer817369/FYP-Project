@@ -35,7 +35,7 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
             }
             if (bookingFromDb.Status == BookingStatus.Pending)
             {
-                bookingFromDb.Status = BookingStatus.Approved;
+                bookingFromDb.Status = BookingStatus.Complete;
                 _unitOfWork.Booking.update(bookingFromDb);
                 _unitOfWork.Save();
                 TempData["Success"] = "Booking Completed";
@@ -56,6 +56,20 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
          
             return RedirectToAction("Index", new { BookingId = bookingFromDb.Id });
         }
+
+        public IActionResult Delete(int bookingId)
+        {
+            var bookingToRemove = _unitOfWork.Booking.GetById(u => u.Id == bookingId);
+            if (bookingToRemove == null)
+            {
+                TempData["error"] = "Booking Id not found";
+                return RedirectToAction(nameof(Index));
+            }
+            _unitOfWork.Booking.Delete(bookingToRemove);
+            _unitOfWork.Save();
+            TempData["success"] = "Booking successfully removed";
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult FilterByStatus(BookingStatus? status)
         {
             var filteredBookings = status.HasValue 
@@ -67,6 +81,21 @@ namespace Kimchi_RMS.Areas.Admin.Controllers
                 return PartialView("~/Areas/Admin/Views/_NotFoundPartial.cshtml");
             }
             return PartialView("_BookingTablePartial", filteredBookings);
+        }
+        public IActionResult FilterByDate(DateOnly? startDate, DateOnly? endDate)
+        {
+            var filteredBookings = startDate.HasValue && endDate.HasValue
+                ? _unitOfWork.Booking.GetAll(u => u.ArrivalDate >= startDate.Value && u.ArrivalDate <= endDate.Value)
+                : _unitOfWork.Booking.GetAll();
+            if (!filteredBookings.Any())
+            {
+                return PartialView("~/Areas/Admin/Views/_NotFoundPartial.cshtml");
+            }
+            else
+            {
+                return PartialView("_BookingTablePartial", filteredBookings);
+            }
+
         }
     }
 }
