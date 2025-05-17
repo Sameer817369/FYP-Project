@@ -43,7 +43,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 if (menuItems != null)
                 {
                     double individualTotal = cart.Menu.Price * cart.Count;
-                    orderTotal += individualTotal;
+                    orderTotal += individualTotal;  
                 }
             }
             ShoppingCartVM.Order.TotalAmount = orderTotal;
@@ -205,7 +205,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 }
 
                 _unitOfWork.Save();
-                TempData["Error"] = "Cart item decreased.";
+                TempData["success"] = "Cart item decreased.";
                 return RedirectToAction("Index");
             }
            
