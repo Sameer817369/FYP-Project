@@ -43,7 +43,7 @@ namespace Kimchi_RMS.Areas.Customer.Controllers
                 if (menuItems != null)
                 {
                     double individualTotal = cart.Menu.Price * cart.Count;
-                    orderTotal += individualTotal;
+                    orderTotal += individualTotal;  
                 }
             }
             ShoppingCartVM.Order.TotalAmount = orderTotal;

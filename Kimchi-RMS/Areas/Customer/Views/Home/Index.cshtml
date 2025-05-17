@@ -1,5 +1,5 @@
 ﻿
-    <!-- Hero Section (Restaurant-focused) - Dark Theme -->
+    <!-- Hero Section -->
     <section class="hero-section bg-dark text-white">
         <div class="container-fluid p-0 position-relative overflow-hidden">
             <!-- Decorative Elements -->
@@ -12,7 +12,7 @@
 
             <div class="container py-5">
                 <div class="row align-items-center py-5">
-                    <!-- Image on Left for this style -->
+                    <!-- Image -->
                     <div class="col-lg-5 mb-5 mb-lg-0 order-lg-1 order-2">
                         <div class="position-relative">
                             <div class="border border-success border-opacity-25 border-4 rounded-4 position-absolute top-0 start-0 bottom-0 end-0 translate-middle-sm" style="transform: rotate(-3deg);"></div>
@@ -30,7 +30,6 @@
                         </div>
                     </div>
 
-                    <!-- Content on Right -->
                     <div class="col-lg-7 order-lg-2 order-1">
                         <div class="d-inline-block bg-success bg-opacity-25 rounded-pill mb-4 px-3 py-2 border border-success border-opacity-50">
                             <span class="fw-bold text-success">Authentic Korean & Nepali Fusion <i class="bi bi-stars"></i></span>
@@ -59,7 +58,7 @@
                             </div>
                         </div>
 
-                        <!-- CTA Buttons with gradient effect -->
+                        <!-- Buttons -->
                         <div class="d-flex flex-wrap gap-3 mb-5">
                             <a asp-area="customer" asp-controller="Booking" asp-action="Index"  class="btn-seven btn-click btn-lg rounded-pill  px-4 py-3 shadow" role="button">
                             <i class="bi bi-calendar-check me-2"></i> Make Reservations
@@ -69,7 +68,7 @@
                             </a>
                         </div>
 
-                        <!-- Features in a different style -->
+                        <!-- Features-->
                         <div class="row g-3 mt-2">
                             <div class="col-md-4">
                                 <div class="bg-black bg-opacity-50 rounded-3 p-3 h-100">
@@ -102,7 +101,7 @@
         </div>
     </section>
 
-<!-- About Section - Dark Theme -->
+<!-- About Section -->
 <section class="pt-1 pb-5 bg-dark text-white">
     <div class="container mb-5">
         <div class="d-flex flex-column justify-content-center align-items-center my-4">
@@ -160,9 +159,9 @@
     </div>
 </section>
 
-<!-- Menu Section - Dark Theme -->
+<!-- Menu Section -->
 <section class="pt-5 bg-dark text-white position-relative overflow-hidden">
-    <!-- Decorative Elements similar to hero section -->
+    <!-- Decorative Elements -->
     <div class="position-absolute end-0 d-none d-lg-block" style="top:150px">
         <i class="bi bi-circle-fill text-success opacity-10" style="font-size: 150px;"></i>
     </div>
@@ -179,7 +178,7 @@
             <div class="mx-auto bg-success" style="width: 50px; height: 3px;"></div>
             <p class="lead mt-3">Discover our chef's signature dishes and seasonal specialties</p>
         </div>
-        <div class="container d-flex justify-content-center align-items-center mt-4">
+        <div class="d-flex justify-content-center align-items-center mt-4 flex-column flex-md-row">
             @*Invoking the viewcomponent method which renders the card dynamically from database*@
             @await Component.InvokeAsync("MenuCard", new { title = "New Entries" })
             @await Component.InvokeAsync("MenuCard", new { title = "Kimchi Specials" })

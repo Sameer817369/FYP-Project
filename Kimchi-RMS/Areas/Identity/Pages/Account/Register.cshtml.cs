@@ -79,7 +79,6 @@ namespace Kimchi_RMS.Areas.Identity.Pages.Account
             [StringLength(10, ErrorMessage ="Phone number cannot be less than 10 digits and vice-versa",MinimumLength =10)]
             public string? Phonenumber { get; set; }
         }
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!_roleManager.RoleExistsAsync(UserRole.Role_Customer).GetAwaiter().GetResult())

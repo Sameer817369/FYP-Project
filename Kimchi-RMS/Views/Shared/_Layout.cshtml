@@ -18,30 +18,34 @@
     <!--open script map-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 </head>
 <body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm bg-dark fixed-top py-3 border-bottom border-success">
+        <nav class="navbar navbar-expand-lg bg-dark fixed-top py-3 border-bottom border-success">
             <div class="container">
+                <!-- Brand -->
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <div class="rounded-circle overflow-hidden shadow-sm me-2" style="width:45px;height:45px;">
                         <img src="/images/kimchi_logo.jpg" class="img-fluid" alt="Kimchi Logo" />
                     </div>
                     <span class="d-inline-block text-success fw-bold fs-4">Kimchi</span>
                 </a>
+
+                <!-- Hamburger button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-list text-white fs-1"></i>
                 </button>
-                <div class="navbar-collapse d-sm-inline-flex collapse">
+
+                <!-- Navigation menu -->
+                <div class="navbar-collapse collapse">
                     <ul class="navbar-nav fw-bold mx-auto d-flex align-items-center gap-2">
                         <li class="nav-item hover-zoom">
                             <a class="nav-link text-white btn-click px-3" asp-area="Customer" asp-controller="Home" asp-action="Index">
                                 <i class="bi bi-house-door me-1 text-success"></i> Home
                             </a>
                         </li>
-                        <li class="nav-item  hover-zoom">
+                        <li class="nav-item hover-zoom">
                             <a class="nav-link text-white btn-click px-3" asp-area="Customer" asp-controller="Home" asp-action="Menu">
                                 <i class="bi bi-bag me-1 text-success"></i> Menu
                             </a>
@@ -52,7 +56,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown hover-zoom z-3">
-                            <a class="nav-link dropdown-toggle btn text-white btn-click" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle btn text-white btn-click" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-journal-text text-success"></i> Resources
                             </a>
                             <ul class="dropdown-menu">
@@ -74,9 +78,11 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="d-flex flex-column flex-sm-row align-items-center gap-2">
+
+                    <!-- Login and Cart section -->
+                    <div class="d-flex flex-column flex-lg-row align-items-center gap-2 pt-3 pt-lg-0">
                         <partial name="_LoginPartial" />
-                        <a class="btn-six rounded-pill px-4 py-2 btn-click d-flex align-items-center" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                        <a class="btn-six rounded-pill px-4 py-2 btn-click d-flex align-items-center justify-content-center" asp-area="Customer" asp-controller="Cart" asp-action="Index">
                             <i class="bi bi-cart3 me-2"></i><span class="fw-bold"> Cart @await Component.InvokeAsync("ShoppingCart")</span>
                         </a>
                     </div>
@@ -85,8 +91,7 @@
         </nav>
     </header>
 
-
-    <!-- Original content -->
+    <!-- Body content -->
     <div class="container-fluid overflow-x-hidden p-0">
         <main role="main" style="margin-top:80px;" class="px-2 px-sm-3">
             <partial name="_Notifications" />
