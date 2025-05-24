@@ -82,22 +82,22 @@
 
                 @if ((Model.ShoppingCardList != null && Model.ShoppingCardList.Any()))
                 {
-                    <div class="row justify-content-end mt-4">
-                        <div class="col-md-6">
-                            <div class="card border-2 border-success bg-dark shadow p-3 rounded bg-light">
-                                <div class="card-body text-center">
-                                    <h4 class="fw-bold mb-3" style="color:antiquewhite">
-                                        <i class="bi bi-credit-card me-2"></i>Total: Rs @Model.Order.TotalAmount.ToString("#,0.00")
-                                    </h4>
+                <div class="row justify-content-end mt-4">
+                    <div class="col-md-6">
+                        <div class="card border-2 border-success bg-dark shadow p-3 rounded bg-light">
+                            <div class="card-body text-center">
+                                <h4 class="fw-bold mb-3" style="color:antiquewhite">
+                                    <i class="bi bi-credit-card me-2"></i>Total: Rs @Model.Order.TotalAmount.ToString("#,0.00")
+                                </h4>
 
-                                    <a asp-area="Customer" asp-controller="Cart" asp-action="OrderSummary"
-                                       class="btn-seven w-100 px-5 py-3 rounded-2 btn-click d-block text-center">
-                                        <i class="bi bi-cart-check me-2"></i> Proceed To Checkout
-                                    </a>
-                                </div>
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="OrderSummary"
+                                   class="btn-seven w-100 px-5 py-3 rounded-2 btn-click d-block">
+                                    <i class="bi bi-cart-check me-2"></i> Proceed To Checkout
+                                </a>
                             </div>
                         </div>
                     </div>
+                </div>
                 }
             </div>
         </div>
